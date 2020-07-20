@@ -152,11 +152,17 @@ Both applications are multi-platform open-sources, licensed under the terms of t
 
 \subsection{A PC Called Trucha}
 
-It's name cames from the trout, that is a fish. In the LabCAF, the PCs (pe-ce-s in spanish, fishes in english) tower computers take names of fishes.
+It's name cames from the trout, that is a fish. In the LabCAF, the PCs (Pe-Ce-s in spanish, fishes in english) tower computers take names of fishes.
 
-Actually, in this PC are stored the Nagios' warnings and alerts, and defined their ranges of activation.
+Actually, in this PC are stored the Nagios' warnings and alerts, and defined their ranges of activation. It looks like the directory tree of the Figure \ref{fg:directoryTree}.
+
+To keep the code clean, readable, and manageable, each of the scripts in \texttt{/etc/nagios/scripts/} whose name begins with \texttt{sensor} parses the data from a single detector plane. Scripts that their name start with \texttt{check} call the classes defined in the previous ones for each of the functional detector planes.
+
+Scripts in \texttt{/etc/nagios/objects/} are the configurations of the variables used for calling the later mentioned python scripts and where the limits of the alerts for Nagios are defined.
 
 
+
+\begin{figure}
 \begin{forest}
   pic dir tree,
   pic root,
@@ -164,25 +170,30 @@ Actually, in this PC are stored the Nagios' warnings and alerts, and defined the
 	[/etc/nagios/
 		[...]
 		[..., file]
-		[objects/
-		[commands.cfg, file]
-		[contacts.cfg, file]
-		[hosts.cfg, file]
-		[printer.cfg, file]
-		[services.cfg, file]
-		[checkcommands.cfg, file]
-		]
 		[scripts/
-		[check\_allAmbient.py, file]
-		[check\_allPower.py, file]
-		[check\_all.py, file]
-		[sensorHighVoltage\_tragaldabas.py, file]
-		[sensorHumidity\_tragaldabas.py, file]
-		[sensorPressure\_tragaldabas.py, file]
-		[sensorTemperature\_tragaldabas.py, file]
+			[check\_allAmbient.py, file]
+			[check\_allPower.py, file]
+			[check\_all.py, file]
+			[sensorHighVoltage\_tragaldabas.py, file]
+			[sensorHumidity\_tragaldabas.py, file]
+			[sensorPressure\_tragaldabas.py, file]
+			[sensorTemperature\_tragaldabas.py, file]
+		]
+		[objects/
+			[commands.cfg, file]
+			[contacts.cfg, file]
+			[hosts.cfg, file]
+			[printer.cfg, file]
+			[services.cfg, file]
+			[checkcommands.cfg, file]
 		]
 	]
 \end{forest}
+\label{fg:directoryTree}
+\caption{Directory tree of Trucha, where the programs for flow control are stored.}
+\end{figure}
+
+
 
 
 
