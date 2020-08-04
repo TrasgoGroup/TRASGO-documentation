@@ -5,6 +5,11 @@
 \usepackage[english]{babel}
 
 \usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+
+
+\let\vec\mathbf  % Bold vectors
 
 \graphicspath{{images/}}
 
@@ -190,6 +195,35 @@ Scripts in \texttt{/etc/nagios/objects/} are the configurations of the variables
 \label{fg:directoryTree}
 \caption{Directory tree of Trucha, where the programs for flow control are stored.}
 \end{figure}
+
+\chapter{Kalman Filter}
+
+The Kalman filter method is intended for finding the optimum estimation $\vec{r}$ of an unknown vector $\vec{r}^t$ according to the measurements $\vec{m}_k$, $k = 1 ... n$ of the vector $\vec{r}^t$.
+
+The Kalman filter starts with a certain initial approximation $w\vec{r} = \vec{r}_0$ and refines the vector $\vec{r}$, consecutively adding one measurement ater the ohter. The optimum value is attained after the addition of the last measurement.
+
+Like it is seen in table \ref{tb:planes}, the upper plane T1 has first index while lower plane T4 has lowest. So that, since we are starting Kalman filter by the lowest plane, $\vec{r}_0 \equiv \vec{r}_4$, and $k$ indices go from $k=4$ to $k=1$
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{@{}ccc@{}}
+\toprule
+Name & Height / mm & Index \\ \midrule
+T1   & 1800        & 0     \\
+T2   & 900         & 1     \\
+T3   & 600         & 2     \\
+T4   & 0           & 3     \\ \bottomrule
+\end{tabular}
+\caption{The four planes of TRAGALDABAS.}
+\label{tb:planes}
+\end{table}
+
+The vector $\vec{r}^t$ can change from one measurement to the next:
+\begin{equation}
+\vec{r}^t = F_k \vec{r}^t_{k+1} + \boldsymbol\nu_k 
+\label{eq:rtk}
+\end{equation}
+where $F_k$ is a linear operator, $\boldsymbol\nu_k$ is a process noise between $(k -1)$-th and $k$-th measurements
 
 
 
