@@ -7,6 +7,17 @@
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset { %
+    language=C++,
+    backgroundcolor=\color{black!10}, % set backgroundcolor
+%    breaklines=true,
+%    frame=tlbr,
+    xleftmargin=0.5cm,
+%%    basicstyle=\ttfamily,
+    basicstyle=\footnotesize,% basic font setting
+}
 
 
 \let\vec\mathbf  % Bold vectors
@@ -195,6 +206,1284 @@ Scripts in \texttt{/etc/nagios/objects/} are the configurations of the variables
 \label{fg:directoryTree}
 \caption{Directory tree of Trucha, where the programs for flow control are stored.}
 \end{figure}
+
+
+
+
+
+-----
+
+
+
+
+
+\chapter{Software Documentation}
+
+\section{The soft\_TT directory}
+
+Inside of soft\_TT\footnote{Whose full path is \texttt{/media/Datos2TB/damian/tragaldabas/soft\_TT/}.} directory
+
+tenemos las listas con los archivos.hld que da Tragaldabas como output. Por ejemplo list\_2019.list (que se abre con less en línea de comandos) tenemos una serie de archivos tr18234...hld
+
+En soft\_TT/testlists/ hay listas con listas en su interior guardando más nombres de archivos.hld iguales. Estos definen cuáles interesan para ejecutar en cada una.
+
+El archivo de python multiThreadRun.py en soft\_TT es el que ordena la ejecución en paralelo de los archivos.hld
+
+\section{Classes definitions}
+
+\subsection{TRpcHit}
+
+TRpcHit is the class which does \textit{... that things ...}, and its source code is in the trpchit.cc and trpchit.h files. It has some protected variables:
+
+\begin{itemize}
+    \item Int\_t $fTrbnum$: Number of the TRB. Each plane has a TRB.
+    \item Int\_t $fCell$: 
+    \item Int\_t $fCol$: 
+    \item Int\_t $fRow$: 
+    \item Float\_t $fX$: X coordinate.
+    \item Float\_t $fY$: Y coordinate.
+    \item Float\_t $fZ$: Z coordinate.
+    \item Float\_t $fTime$: Track time
+    \item Float\_t $fCharge$: \textbf{Absolute} (¿?) value of the charge.
+\end{itemize}
+
+The methods of TRpcSaeta class are:
+
+\subsubsection{getCell}
+
+\begin{lstlisting}
+Int_t getCell();
+\end{lstlisting}
+
+It returns the protected variable $fCell$.
+
+\[\]
+
+\subsubsection{getCharge}
+
+\begin{lstlisting}
+Int_t getCharge();
+\end{lstlisting}
+
+It returns the protected variable $fCharge$.
+
+\[\]
+
+\subsubsection{getCol}
+
+\begin{lstlisting}
+Int_t getCol();
+\end{lstlisting}
+
+It returns the protected variable $fCol$.
+
+\[\]
+
+\subsubsection{getHit}
+
+\begin{lstlisting}
+void getHit(Int_t& trbnum, Int_t& cell,Int_t&  col, Int_t&  row,
+	Float_t& x, Float_t& y, Float_t& z, Float_t& time,
+	Float_t& charge);
+\end{lstlisting}
+
+It sets the value of the protected variables passed as parameters to the respective variables stored in memory for the detector with two planes.
+
+\begin{itemize}
+	\item Int\_t $fTrbnum \rightarrow$ Int\_t $trbnum$
+	\item Int\_t $fCell \rightarrow$ Int\_t $cell$
+	\item Int\_t $fCol \rightarrow$ Int\_t $col$
+	\item Int\_t $fRow \rightarrow$ Int\_t $row$
+	\item Float\_t $fX \rightarrow$ Float\_t $x$
+	\item Float\_t $fY \rightarrow$ Float\_t $y$
+	\item Float\_t $fZ \rightarrow$ Float\_t $z$
+	\item Float\_t $fTime \rightarrow$ Float\_t $time$
+	\item Float\_t $fCharge \rightarrow$ Float\_t $charge$
+\end{itemize}
+
+
+
+\subsubsection{getRow}
+
+\begin{lstlisting}
+Int_t getRow();
+\end{lstlisting}
+
+It returns the protected variable $fRow$.
+
+\[\]
+
+\subsubsection{getTime}
+
+\begin{lstlisting}
+Int_t getTime();
+\end{lstlisting}
+
+It returns the protected variable $fTime$.
+
+\[\]
+
+\subsubsection{getTrbnum}
+
+\begin{lstlisting}
+Int_t getTrbnum();
+\end{lstlisting}
+
+It returns the protected variable $fTrbnum$.
+
+\[\]
+
+\subsubsection{getX}
+
+\begin{lstlisting}
+Int_t getX();
+\end{lstlisting}
+
+It returns the protected variable $fX$.
+
+\[\]
+
+\subsubsection{getY}
+
+\begin{lstlisting}
+Int_t getY();
+\end{lstlisting}
+
+It returns the protected variable $fY$.
+
+\[\]
+
+\subsubsection{getZ}
+
+\begin{lstlisting}
+Int_t getZ();
+\end{lstlisting}
+
+It returns the protected variable $fZ$.
+
+\[\]
+
+\subsubsection{setCell}
+
+\begin{lstlisting}
+void setCell(Int_t num );
+\end{lstlisting}
+
+It sets the value passed to the $num$ parameter to the protected variable $fCell$.
+
+\[\]
+
+\subsubsection{setCharge}
+
+\begin{lstlisting}
+void setCharge(Float_t val );
+\end{lstlisting}
+
+It sets the value passed to the $val$ parameter to the protected variable $fCharge$.
+
+\[\]
+
+\subsubsection{setCol}
+
+\begin{lstlisting}
+void setCol(Int_t num );
+\end{lstlisting}
+
+It sets the value passed to the $num$ parameter to the protected variable $fCol$.
+
+\[\]
+
+\subsubsection{setHit}
+
+\begin{lstlisting}
+void setHit(Int_t trbnum,Int_t  cell,Int_t  col,Int_t  row,
+	Float_t x, Float_t y, Float_t z, Float_t time,
+	Float_t charge);
+\end{lstlisting}
+
+It sets the value of the parameters to their respective protected variables.
+
+\begin{itemize}
+	\item Int\_t $trbnum \rightarrow$ Int\_t $fTrbnum$
+	\item Int\_t $cell \rightarrow$ Int\_t $fCell$
+	\item Int\_t $col \rightarrow$ Int\_t $fCol$
+	\item Int\_t $row \rightarrow$ Int\_t $fRow$
+	\item Float\_t $x \rightarrow$ Float\_t $fX$
+	\item Float\_t $y \rightarrow$ Float\_t $fY$
+	\item Float\_t $z \rightarrow$ Float\_t $fZ$
+	\item Float\_t $time \rightarrow$ Float\_t $fTime$
+	\item Float\_t $charge \rightarrow$ Float\_t $fCharge$
+\end{itemize}
+
+\subsubsection{setRow}
+
+\begin{lstlisting}
+void setRow(Int_t num );
+\end{lstlisting}
+
+It sets the value passed to the $num$ parameter to the protected variable $fRow$.
+
+\[\]
+
+\subsubsection{setTime}
+
+\begin{lstlisting}
+void setTime(Float_t val );
+\end{lstlisting}
+
+It sets the value passed to the $val$ parameter to the protected variable $fTime$.
+
+\[\]
+
+\subsubsection{setTrbnum}
+
+\begin{lstlisting}
+void setTrbnum(Int_t num );
+\end{lstlisting}
+
+It sets the value passed to the $num$ parameter to the protected variable $fTrbnum$.
+
+\[\]
+
+\subsubsection{setX}
+
+\begin{lstlisting}
+void setX(Float_t val );
+\end{lstlisting}
+
+It sets the value passed to the $val$ parameter to the protected variable $fX$.
+
+\[\]
+
+\subsubsection{setY}
+
+\begin{lstlisting}
+void setY(Float_t val );
+\end{lstlisting}
+
+It sets the value passed to the $val$ parameter to the protected variable $fY$.
+
+\[\]
+
+\subsubsection{setZ}
+
+\begin{lstlisting}
+void setZ(Float_t val );
+\end{lstlisting}
+
+It sets the value passed to the $val$ parameter to the protected variable $fZ$.
+
+\[\]
+
+\subsection{TRpcHitF}
+
+TRpcHitF is the class which does \textit{... that things ...}, and its source code is in the trpchitf.cc and trpchitf.h files. It has some private variables:
+
+\begin{itemize}
+    \item TRpcCalPar *$fPar$: 
+    \item TClonesArray *$fRpcRawHits$: 
+    \item TClonesArray *$fRpcHitHits$: 
+    \item TActiveCells *$fActiveCells$: 
+    \item Int\_t $totalNHits$: 
+\end{itemize}
+
+The methods of TRpcHitF class are:
+
+\subsubsection{addRpcHit}
+
+\begin{lstlisting}
+TRpcHit* addRpcHit();
+\end{lstlisting}
+
+It returns the pointer to a new \texttt{(hits[totalNHits++]) TRpcHit()}.
+
+\[\]
+
+\subsubsection{execute}
+
+IDK [...]
+
+\[\]
+
+\subsubsection{init}
+
+\begin{lstlisting}
+Int_t init(TString filename, TString filenameActive);
+\end{lstlisting}
+
+It creates a new TRpcCalPar object called $fPar$ with name $filename$ and another new TActiveCells object called $fActiveCells$ with name $filenameActive$. Then takes \texttt{gEvent -> getRpcRawHits()} and stores it in the private variable $fRpcRawHits$.
+
+\[\]
+
+\subsubsection{getRpcHits}
+
+\begin{lstlisting}
+TClonesArray*  getRpcHits();
+\end{lstlisting}
+
+It returns the private variable $fRpcHitHits$.
+
+\[\]
+
+\subsubsection{getRpcRawHits}
+
+\begin{lstlisting}
+TClonesArray*  getRpcRawHits();
+\end{lstlisting}
+
+It returns \texttt{gEvent->getRpcRawHits()}.
+
+\[\]
+
+\subsection{TRpcSaeta}
+
+TRpcSaeta is the class which does \textit{... that things ...}, and its source code is in the trpcsaeta.cc and trpcsaeta.h files. All its initial values are set as $-1$ with the constructor. It has some protected variables:
+
+\begin{itemize}
+	\item Float\_t $fX$: X coordinate.
+	\item Float\_t $fXP$: X slope.
+	\item Float\_t $fY$: Y coordinate.
+	\item Float\_t $fYP$: Y slope.
+	\item Float\_t $fZ$: Z coordinate.
+	\item Float\_t $fTime$: Track time.
+	\item Float\_t $fSlow$: Slowness.
+	\item Float\_t $fAl$: Alpha angle.
+	\item Float\_t $fBe$: Beta angle.
+	\item Float\_t $fGa$: Gamma angle.
+	\item Int\_t   $fSaN$: Saeta order.
+	\item Int\_t   $find0$: Hit index.
+	\item Int\_t   $find1$: Hit index.
+	\item Int\_t   $find2$: Hit index.
+	\item Float\_t $fChi2$: Chi-square.
+\end{itemize}
+
+The methods of TRpcSaeta class are:
+
+\subsubsection{getAl}
+
+\begin{lstlisting}
+Float_t getAl();
+\end{lstlisting}
+
+It returns the alpha $\alpha$ angle in radians $fAl$. This is the angle between the trayectory of the incident particle and the $x$-axis.
+
+\[\]
+
+\subsubsection{getBe}
+
+\begin{lstlisting}
+Float_t getBe();
+\end{lstlisting}
+
+It returns the beta $\beta$ angle in radians $fBe$. This is the angle between the trayectory of the incident particle and the $y$-axis.
+
+\[\]
+
+\subsubsection{getChi2}
+
+\begin{lstlisting}
+Float_t getChi2();
+\end{lstlisting}
+
+It returns the chi squared $\chi^2$ value $fChi2$.
+
+\[\]
+
+\subsubsection{getGa}
+
+\begin{lstlisting}
+Float_t getGa();
+\end{lstlisting}
+
+It returns the gamma $\gamma$ angle in radians $fGa$w. This is the angle between the trayectory of the incident particle and the $z$-axis.
+
+\[\]
+
+\subsubsection{getInd}
+
+\begin{lstlisting}
+Int_t getInd(Int_t n);
+\end{lstlisting}
+
+It returns the hit index for the $n$ parameter:
+\begin{itemize}
+	\item $n = 0 \rightarrow find0$
+	\item $n = 1 \rightarrow find1$
+	\item $n = 2 \rightarrow find2$
+\end{itemize}
+
+If $n \neq 0, 1, 2$, it returns $-1$.
+
+\[\]
+
+\subsubsection{getPhi}
+
+\begin{lstlisting}
+Float_t getPhi();
+\end{lstlisting}
+
+It returns the phi $\phi$ angle. This is the principal value of the arc tangent of $fAl/fBe$, expressed in radians.
+
+\[\]
+
+\subsubsection{getPhiDeg}
+
+\begin{lstlisting}
+Float_t getPhiDeg();
+\end{lstlisting}
+
+It returns the phi $\phi$ angle in degrees. This is the principal value of the arc tangent of $fAl/fBe$.
+
+\[\]
+
+\subsubsection{getRpcSaeta2Planes}
+
+\begin{lstlisting}
+void getRpcSaeta2Planes(Float_t& x0,Float_t& y0,Float_t& t0,
+	Float_t& al,Float_t& be,Float_t& ga,Int_t& ind0,
+	Int_t& ind1);
+\end{lstlisting}
+
+It sets the value of the protected variables passed as parameters to the respective variables stored in memory for the detector with two planes.
+
+\begin{itemize}
+	\item Float\_t $fX0 \rightarrow$ Float\_t $x0$
+	\item Float\_t $fY0 \rightarrow$ Float\_t $y0$
+	\item Float\_t $fTime \rightarrow$ Float\_t $t0$
+	\item Float\_t $fAl \rightarrow$ Float\_t $al$
+	\item Float\_t $fBe \rightarrow$ Float\_t $be$
+	\item Float\_t $fGa \rightarrow$ Float\_t $ga$
+	\item Int\_t $find0 \rightarrow$ Int\_t $ind0$
+	\item Int\_t $find1 \rightarrow$ Int\_t $ind1$
+\end{itemize}
+
+\subsubsection{getRpcSaeta3Planes}
+
+\begin{lstlisting}
+void getRpcSaeta3Planes(Float_t& x0,Float_t& xP,Float_t& y0,
+	Float_t& yP,Float_t& z, Float_t& t0,Float_t& sl,
+	Float_t& al, Float_t& be,Float_t& ga, Int_t& san,
+	Int_t& ind0,Int_t& ind1, Int_t& ind2, Float_t& chi2);
+\end{lstlisting}
+
+It sets the value of the protected variables passed as parameters to the respective variables stored in memory for the detector with three planes.
+
+\begin{itemize}
+	\item Float\_t $fX0 \rightarrow$ Float\_t $x0$
+	\item Float\_t $fXP \rightarrow$ Float\_t $xP$
+	\item Float\_t $fY0 \rightarrow$ Float\_t $y0$
+	\item Float\_t $fYP \rightarrow$ Float\_t $yP$
+	\item Float\_t $fZ \rightarrow$ Float\_t $z$
+	\item Float\_t $fTime \rightarrow$ Float\_t $t0$
+	\item Float\_t $fSlow \rightarrow$ Float\_t $sl$
+	\item Float\_t $fAl \rightarrow$ Float\_t $al$
+	\item Float\_t $fBe \rightarrow$ Float\_t $b$
+	\item Float\_t $fGa \rightarrow$ Float\_t $ga$
+	\item Float\_t $fSaN \rightarrow$ Float\_t $san$
+	\item Int\_t $find0 \rightarrow$ Int\_t $ind0$
+	\item Int\_t $find1 \rightarrow$ Int\_t $ind1$
+	\item Int\_t $find2 \rightarrow$ Int\_t $ind2$
+	\item Int\_t $fChi2 \rightarrow$ Int\_t $chi2$
+\end{itemize}
+
+\subsubsection{getSaetaN}
+
+\begin{lstlisting}
+Float_t getSaetaN();
+\end{lstlisting}
+
+It returns the value of the saeta order $fSaN$.
+
+\[\]
+
+\subsubsection{getSlow}
+
+\begin{lstlisting}
+Float_t getX0();
+\end{lstlisting}
+
+It returns the slownes of the particle $fSlow$, which is the inverse of velocity $1/v$ (Units?).
+
+\[\]
+
+\subsubsection{getTheta}
+
+\begin{lstlisting}
+Float_t getTheta();
+\end{lstlisting}
+
+It returns the theta $\theta$ angle. This is the principal value of the arc cosine of $fGa$, expressed in radians.
+
+\[\]
+
+\subsubsection{getThetaDeg}
+
+\begin{lstlisting}
+Float_t getThetaDeg();
+\end{lstlisting}
+
+It returns the theta $\theta$ angle in degrees. This is the principal value of the arc cosine of $fGa$.
+
+\[\]
+
+\subsubsection{getTime}
+
+\begin{lstlisting}
+Float_t getTime();
+\end{lstlisting}
+
+It returns the time of the hit measured since the tracking started (Units?) $fTime$.
+
+\[\]
+
+
+\subsubsection{getX0}
+
+\begin{lstlisting}
+Float_t getX0();
+\end{lstlisting}
+
+It returns the X coorinate, $fX$ (Units?).
+
+\[\]
+
+\subsubsection{getXP}
+
+\begin{lstlisting}
+Float_t getXP();
+\end{lstlisting}
+
+It returns the X slope, $fXP$ (Units?).
+
+\[\]
+
+\subsubsection{getY0}
+
+\begin{lstlisting}
+Float_t getY0();
+\end{lstlisting}
+
+It returns the Y coorinate, $fY$ (Units?).
+
+\[\]
+
+\subsubsection{getYP}
+
+\begin{lstlisting}
+Float_t getYP();
+\end{lstlisting}
+
+It returns the Y slope, $fYP$ (Units?).
+
+\[\]
+
+\subsubsection{getZ0}
+
+\begin{lstlisting}
+Float_t getZ0();
+\end{lstlisting}
+
+It returns the Z coorinate, $fZ$ (Units?).
+
+\[\]
+
+\subsubsection{setRpcSaeta2Planes}
+
+\begin{lstlisting}
+void setRpcSaeta2Planes(Float_t x0,Float_t y0,Float_t t0,
+	Float_t al,Float_t be,Float_t ga,Int_t ind0,Int_t ind1);
+\end{lstlisting}
+
+It sets the value of the parameters to their respective protected variables for the detector with only two planes.
+
+\begin{itemize}
+	\item Float\_t $x0 \rightarrow$ Float\_t $fX0$
+	\item Float\_t $y0 \rightarrow$ Float\_t $fY0$
+	\item Float\_t $t0 \rightarrow$ Float\_t $fTime$
+	\item Float\_t $al \rightarrow$ Float\_t $fAl$
+	\item Float\_t $be \rightarrow$ Float\_t $fBe$
+	\item Float\_t $ga \rightarrow$ Float\_t $fGa$
+	\item Int\_t $ind0 \rightarrow$ Int\_t $find0$
+	\item Int\_t $ind1 \rightarrow$ Int\_t $find1$
+\end{itemize}
+
+\subsubsection{setRpcSaeta3Planes}
+
+\begin{lstlisting}
+void setRpcSaeta3Planes(Float_t x0,Float_t xP,Float_t y0,
+	Float_t yP,Float_t z, Float_t t0,Float_t sl, Float_t al
+	Float_t be,Float_t ga, Int_t san,Int_t ind0,Int_t ind1
+	Int_t ind2, Float_t chi2);
+\end{lstlisting}
+
+It sets the value of the parameters to their respective protected variables for the detector with three planes.
+
+\begin{itemize}
+	\item Float\_t $x0 \rightarrow$ Float\_t $fX0$
+	\item Float\_t $xP \rightarrow$ Float\_t $fXP$
+	\item Float\_t $y0 \rightarrow$ Float\_t $fY0$
+	\item Float\_t $yP \rightarrow$ Float\_t $fYP$
+	\item Float\_t $z \rightarrow$ Float\_t $fZ$
+	\item Float\_t $t0 \rightarrow$ Float\_t $fTime$
+	\item Float\_t $sl \rightarrow$ Float\_t $fSlow$
+	\item Float\_t $al \rightarrow$ Float\_t $fAl$
+	\item Float\_t $be \rightarrow$ Float\_t $fBe$
+	\item Float\_t $ga \rightarrow$ Float\_t $fGa$
+	\item Float\_t $san \rightarrow$ Float\_t $fSaN$
+	\item Int\_t $ind0 \rightarrow$ Int\_t $find0$
+	\item Int\_t $ind1 \rightarrow$ Int\_t $find1$
+	\item Int\_t $ind2 \rightarrow$ Int\_t $find2$
+	\item Int\_t $chi2 \rightarrow$ Int\_t $fChi2$
+\end{itemize}
+
+\subsubsection{setTime}
+
+\begin{lstlisting}
+void setTime(Float_t val);
+\end{lstlisting}
+
+It sets the value of the parameter $val$ to the protected variable $fTime$.
+
+\[\]
+
+
+
+
+\subsection{TRpcSaetaF}
+
+TRpcSaetaF is the class which does \textit{... that things ...}, and its source code is in the trpcsaetaf.cc and trpcsaetaf.h files. It has some protected variables:
+
+\begin{itemize}
+	\item TClonesArray  *$fRpcHitHits$: 
+	\item TClonesArray  *$fRpcHitCorr$: 
+	\item TClonesArray  *$fRpcSaeta2Planes$: 
+	\item TClonesArray  *$fRpcSaeta3Planes$: 
+	\item Int\_t \textit{totalNHits}: 
+	\item Int\_t \textit{totalNHits}2\textit{Planes}: 
+	\item Int\_t \textit{totalNHits}3\textit{Planes}: 
+	\item Int\_t \textit{totalNHitsCorr}: 
+\end{itemize}
+
+And it also has other public variables:
+
+\begin{itemize}
+	\item TMatrixF $InputSaeta2Planes$: the saeta vector with next values as arguments
+	
+	\begin{lstlisting}
+TMatrixF InputSaeta2Planes(Float_t x1, Float_t y1, 
+Float_t t1, Float_t z1, Float_t x2, Float_t y2, Float_t t2, 
+Float_t z2);
+	\end{lstlisting}
+	
+	where $(x_1, y_1, z_1, t_1)$ are the coordinates in the first plane and $(x_2, y_2, z_2, t_2)$ in the second one
+	
+%	\begin{itemize}
+%		\item Float\_t $x_1$: 
+%		\item Float\_t $y_1$: 
+%		\item Float\_t $t_1$: 
+%		\item Float\_t $z_1$: 
+%		\item Float\_t $x_2$: 
+%		\item Float\_t $y_2$: 
+%		\item Float\_t $t_2$: 
+%		\item Float\_t $z_2$: 
+%	\end{itemize}
+	
+	\begin{align*}
+%	InputSaeta2Planes = [ (x2*z1-x1*z2)/Dz,\\
+%	 (x1-x2)/Dz, \\
+%	 (y2*z1-y1*z2)/Dz, \\
+%	 (y1-y2)/Dz, \\
+%	 (t2*z1-t1*z2)/Dz, \\
+%	 (t1-t2)/Dz ],
+	InputSaeta2Planes = \left(
+	\begin{array}{c}
+	 \dfrac{x_2 z_1-x_1 z_2}{Dz}\\
+%	 (x_2 z_1-x_1 z_2)/Dz\\
+	 \dfrac{x_1-x_2}{Dz} \\
+%	 (x_1-x_2)/Dz \\
+	 \dfrac{y_2 z_1-y_1 z_2}{Dz} \\
+%	 (y_2 z_1-y_1 z_2)/Dz \\
+	 \dfrac{y_1-y_2}{Dz} \\
+%	 (y_1-y_2)/Dz \\
+	 \dfrac{t_2 z_1-t_1 z_2}{Dz} \\
+%	 (t_2 z_1-t_1 z_2)/Dz \\
+	 \dfrac{t_1-t_2}{Dz}
+%	 (t_1-t_2)/Dz
+	\end{array} \right),
+	\end{align*}
+	
+	and where Float\_t $Dz = z1 - z2$.
+	
+	
+	\item TMatrixF $KMatrix$: the $K$ matrix with next values as arguments
+	
+	\begin{lstlisting}
+TMatrixF KMatrix(TMatrixF SIn, Float_t z);
+	\end{lstlisting}
+	
+	where $SIn$ is the input saeta vector
+	
+	\begin{align*}
+	SIn = \left(
+	\begin{array}{c}
+	x_0\\
+	x_p\\
+	y_0\\
+	y_p\\
+	t_0\\
+	s_0
+	\end{array} \right),
+	\end{align*}
+	
+	and $z$ the height of the current plane. The $k$ value is
+	
+	\begin{equation}
+	\notag
+	k = \sqrt{1 + x_p^2 + y_p^2},
+	\end{equation}
+	
+	so that, $KMatrix$ is
+	
+	\begin{align*}
+%	KMatrix =
+	\left(
+	\begin{array}{cccccc}
+	w_x   & w_x z & 0 & 0 & 0 & 0\\
+	w_x z & w_x z^2 + s_0^2 w_t x_p^2 z^2/k^2 & 0 & s_0^2 w_t x_p^2 z^2 /k^2 & s_0 w_t x_p z/k & s_0 w_t y_p z^2 \\
+	0 & 0 & w_y & w_y z & 0 & 0\\
+	0 & s_0^2 w_t x_p^2 z^2 /k^2 & w_y z & w_y z^2 + s_0^2 w_t x_p^2 z^2/k^2 & s_0 w_t y_p z/k & s_0 w_t y_p z^2\\
+	0 & s_0 w_t x_p z/k & 0 & s_0 w_t y_p z/k & w_t & w_t k z\\
+	0 & s_0 w_t y_p z^2 & 0 & s_0 w_t y_p z^2 & w_t k z & w_t k^2 z^2
+	\end{array} \right)
+	\end{align*}
+	
+	\item TMatrixF $AVector$: the \textbf{measurement} (¿?) vector with next values as arguments
+	
+	\begin{lstlisting}
+TMatrixF AVector(TMatrixF SIn, Float_t x, Float_t y, 
+Float_t t, Float_t z);
+	\end{lstlisting}
+	
+	where $(x, y, z, t)$ are the measured coordinates and $SIn$ and $k$ have the same form as in TMatrixF $KMatrix$. So $AVector$ is
+	
+	\begin{align*}
+	AVector = \left(
+	\begin{array}{c}
+	w_x x\\
+	z \dfrac{w_x x k^2 + s_0 w_t x_p (t k+ s_0 (x_p^2 +y_p^2 )z)}{k^2}\\
+	w_y y\\
+	z \dfrac{w_y y k^2 + s_0 w_t y_p (t k+ s_0 (x_p^2 +y_p^2 )z)}{k^2}\\
+	w_t \dfrac{t k + s_0 (x_p^2+ y_p^2)z}{k}\\
+	w_t (t k + s_0 (x_p^2+ y_p^2)z) z
+	\end{array} \right).
+	\end{align*}
+	
+	
+\end{itemize}
+
+\[\]
+
+The methods of TRpcSaetaF class are:
+
+\subsubsection{addRpcHit}
+
+\begin{lstlisting}
+TRpcHit* addRpcHit();
+\end{lstlisting}
+
+It returns the pointer $rpchit$, which points to a new \texttt{(hits[totalNHitsCorr++]) TRpcHit()}, the next hit.
+
+\[\]
+
+\subsubsection{addRpcSaeta2Planes}
+
+\begin{lstlisting}
+TRpcSaeta* addRpcSaeta2Planes();
+\end{lstlisting}
+
+It returns the pointer $RpcSaeta$, which points to a new \texttt{(RpcSaeta2Planes} \texttt{[totalNHits2Planes++])} \texttt{TRpcSaeta()}, the next [...].
+
+\[\]
+
+\subsubsection{addRpcSaeta3Planes}
+
+\begin{lstlisting}
+TRpcSaeta* addRpcSaeta3Planes()
+\end{lstlisting}
+
+It returns the pointer $RpcSaeta$, which points to a new \texttt{(RpcSaeta3Planes} \texttt{[totalNHits3Planes++])} \texttt{TRpcSaeta()}, the next [...].
+
+\[\]
+
+\subsubsection{execute}
+
+\begin{lstlisting}
+Int_t execute();
+\end{lstlisting}
+
+The main function of the class. It makes the loops for finding hits in planes and stores them on Ttrees.
+
+\[\]
+
+\subsubsection{getRpcHits}
+
+\begin{lstlisting}
+TClonesArray* getRpcHits() {return gEvent->getRpcHits(); }
+\end{lstlisting}
+
+[...]
+
+\[\]
+
+\subsubsection{getRpcHitsCorr}
+
+\begin{lstlisting}
+ClonesArray* getRpcHitCorr() {return fRpcHitCorr; }
+\end{lstlisting}
+
+[...]
+
+\[\]
+
+\subsubsection{getRpcSaeta2Planes}
+
+\begin{lstlisting}
+ClonesArray* getRpcSaeta2Planes() {return fRpcSaeta2Planes; }
+\end{lstlisting}
+
+It returns the private $fRpcSaeta2Planes$ pointer.
+
+\[\]
+
+\subsubsection{getRpcSaeta3Planes}
+
+\begin{lstlisting}
+ClonesArray* getRpcSaeta3Planes() {return fRpcSaeta3Planes; }
+\end{lstlisting}
+
+It returns the private $fRpcSaeta3Planes$ pointer.
+
+\[\]
+
+\subsubsection{init}
+
+\begin{lstlisting}
+Int_t init();
+\end{lstlisting}
+
+It initializes the variables $fRpcHitCorr$, $fRpcSaeta2Planes$ and $fRpcSaeta3Planes$ if they are not defined by TClonesArray, creating the new ones.
+
+\[\]
+
+\subsection{TTMatrix}
+
+TTMatrix is the class which does \textit{... that things ...}, and its source code is in the ttmatrix.cc and ttmatrix.h files. It has some protected variables:
+
+\begin{itemize}
+	\item Float\_t $fX1$: X coordinate in the first plane
+	\item Float\_t $fY1$: Y coordinate in the first plane
+	\item Float\_t $fT1$: time in the first plane
+	\item Float\_t $fZ1$: Z coordinate in the first plane
+	\item Float\_t $fX2$: X coordinate in the second plane
+	\item Float\_t $fY2$: Y coordinate in the second plane
+	\item Float\_t $fT2$: time in the second plane
+	\item Float\_t $fZ2$: Z coordinate in the second plane
+	\item Float\_t $fwx$: deviation of cell shape in x direction
+	\item Float\_t $fwy$: deviation of cell shape in y direction
+	\item Float\_t $fwz$: ¿?
+\end{itemize}
+
+And it also has other public variables:
+
+\begin{itemize}
+	\item TMatrixF $AVector$: is the vector which \textit{... do things ...} ¿Is it the \textbf{measurement} vector?
+	\begin{lstlisting}
+TMatrixF AVector(TMatrixF SIn, Float_t x, Float_t y,
+	Float_t t, Float_t z);
+	\end{lstlisting}
+
+	where $SIn$ is the input saeta vector
+
+	\begin{align*}
+	SIn = \left(
+	\begin{array}{c}
+	x_0\\
+	x_p\\
+	y_0\\
+	y_p\\
+	t_0\\
+	s_0
+	\end{array} \right),
+	\end{align*}
+	
+	and $(x, y, z, t)$ the measured coordinates and time. The $k$ value is 
+	
+	\begin{equation}
+	\notag
+	k = \sqrt{1 + x_p^2 + y_p^2},
+	\end{equation}
+	
+	so that, $AVector$ is
+	
+	\begin{align*}
+	AVector = \left(
+	\begin{array}{c}
+	w_x x\\
+	z \dfrac{w_x x k^2 + s_0 w_t x_p (t k + s_0 (x_p^2 + y_p^2) z)}{k^2}\\
+	w_y y\\
+	z \dfrac{w_y y k^2 + s_0 w_t y_p (t k + s_0 (x_p + y_p) z)}{k^2}\\
+	w_t \dfrac{t k + s_0 (x_p + y_p) z}{k}\\
+	w_t z (t k + s_0 (x_p + y_p) z)
+	\end{array} \right).
+	\end{align*}
+	
+	Here the $w_x, w_y, w_z, w_t$ variables are initializated to zero all of them when $AVector$ is created.
+	
+	\item TMatrixF $KMatrix$: is the vector which \textit{... do things ...} ¿Is it the \textbf{measurement} vector?
+	\begin{lstlisting}
+TMatrixF KMatrix(TMatrixF SIn, Float_t z);
+	\end{lstlisting}
+
+	where $SIn$ is the input saeta vector
+
+	\begin{align*}
+	SIn = \left(
+	\begin{array}{c}
+	x_0\\
+	x_p\\
+	y_0\\
+	y_p\\
+	t_0\\
+	s_0
+	\end{array} \right),
+	\end{align*}
+	
+	and $(x, y, z, t)$ the measured coordinates and time. The $k$ value has the same shape as in the $AVector$. So, the $KMatrix$ is
+	
+	\begin{align*}
+%	KMatrix =
+	\left(
+	\begin{array}{cccccc}
+	w_x   & w_x z                             & 0     & 0                        & 0               & 0\\
+	w_x z & w_x z^2 + s_0^2 w_t x_p^2 z^2/k^2 & 0     & s_0^2 w_t x_p^2 z^2 /k^2 & s_0 w_t x_p z/k & s_0 w_t y_p z^2 \\
+	0     & 0                                 & w_y   & w_y z                    & 0               & 0\\
+	0     & s_0^2 w_t x_p^2 z^2 /k^2          & w_y z & w_y z^2 + s_0^2 w_t x_p^2 z^2/k^2 & s_0 w_t y_p z/k & s_0 w_t y_p z^2\\
+	0     & s_0 w_t x_p z/k                   & 0     & s_0 w_t y_p z/k          & w_t             & w_t k z\\
+	0     & s_0 w_t y_p z^2                   & 0     & s_0 w_t y_p z^2          & w_t k z         & w_t k^2 z^2
+	\end{array} \right),
+	\end{align*}
+	
+	with $w_x, w_y, w_z, w_t$ initializated as zero.
+	
+	\item TMatrixF \textit{InputSaeta2Planes}:  the saeta vector with next values as arguments
+	
+	\begin{lstlisting}
+TMatrixF InputSaeta2Planes(Float_t x1, Float_t y1, 
+Float_t t1, Float_t z1, Float_t x2, Float_t y2, Float_t t2, 
+Float_t z2);
+	\end{lstlisting}
+	
+	where $x_1, y_1, z_1, t_1$ are the coordinates in the first plane and $x_2, y_2, z_2, t_2$ in the second one. This is a function that returns
+	
+	\begin{align*}
+	InputSaeta2Planes = \left(
+	\begin{array}{c}
+	 \dfrac{x_2 z_1-x_1 z_2}{z_1 - z_2}\\ \\
+	 \dfrac{x_1-x_2}{z_1 - z_2} \\ \\
+	 \dfrac{y_2 z_1-y_1 z_2}{z_1 - z_2} \\ \\
+	 \dfrac{y_1-y_2}{z_1 - z_2} \\ \\
+	 \dfrac{t_2 z_1-t_1 z_2}{z_1 - z_2} \\ \\
+	 \dfrac{t_1-t_2}{z_1 - z_2}
+	\end{array} \right),
+	\end{align*}
+	
+	and assigns the parameters $x_1, y_1, z_1, t_1, x_2, y_2, z_2, t_2$ to the protected variables of the calss $fX1 , fY1, fZ1, fT1, fX2, fY2, fZ2, fT2$ respectively.
+	
+\end{itemize}
+
+\subsection{Unpacker}
+
+Unpacker is the class which does \textit{... that things ...}, and its source code is in the trpcunpacker.cc and trpcunpacker.h files. It has some protected variables:
+
+\begin{itemize}
+	\item HldEvent* $pEvent$: current event read from file.
+    \item Int\_t $EventNr$: event Counter.
+    \item Int\_t $EventLimit$: maximum event number per file.
+    \item Int\_t $subEvtId$:
+    \item TFile* $pRootFile$: pointer to TFile with the output tree.
+    \item std::string $inputFile$: wk 28.05
+    \item std::string $outputFile$: wk 28.05
+    \item Int\_t \textit{fpga\_code}: address of the data source (e.g. given fpga ) decoded from hld file.
+    \item Int\_t $refCh$: 
+\end{itemize}
+
+The methods of the Unpacker class are:
+
+\subsubsection{eventLoop}
+
+\begin{lstlisting}
+Bool_t eventLoop(Int_t NbEvt=50000,Int_t startEvt=0);
+\end{lstlisting}
+
+Loop over all events, data is written to the root tree.
+
+\begin{itemize}
+	\item Int\_t $NbEvt$: 
+	\item Int\_t $startEvt$: 
+\end{itemize}
+
+\subsubsection{eventLoopFillCal}
+
+\begin{lstlisting}
+Bool_t eventLoopFillCal(Int_t nbEvt, Int_t startEv, TH1D** hq, 
+	TH1D** hdt, TH1D** hdt2);
+Bool_t eventLoopFillCal(Int_t nbEvt, Int_t startEv, TH1D** h1D, 
+	TH2D** h2D, TH3D** h3D);
+\end{lstlisting}
+
+Loop over all events, data written to the root tree
+
+\begin{itemize}
+	\item Int\_t $NbEvt$: 
+	\item Int\_t $startEvt$: 
+	\item TH1D** $hq$: 
+	\item TH1D** $h1D$: 
+	\item TH1D** $hdt$: 
+	\item TH2D** $h2D$: 
+	\item TH1D** $hdt2$: 
+	\item TH3D** $h3D$: 
+\end{itemize}
+
+\subsubsection{eventLoopSyncCheck}
+
+\begin{lstlisting}
+Int_t eventLoopSyncCheck(Int_t nbEvt,Int_t startEv);
+\end{lstlisting}
+
+Loop over all events, data is written to the root tree.
+
+\begin{itemize}
+	\item Int\_t $NbEvt$: 
+	\item Int\_t $startEvt$: 
+\end{itemize}
+
+\subsubsection{fillCalibration}
+
+\begin{lstlisting}
+void Unpacker::fillCalibration(const char* dir, TString list,
+	const char* odir,const char* ofile, Int_t nEvt,Int_t n);
+\end{lstlisting}
+
+\begin{itemize}
+	\item const char* $dir$: path to input file.
+	\item TString $list$: list of \texttt{files.hld}.
+	\item const char* $odir$: path to output directory.
+	\item const char* $ofile$: path to output file.
+	\item Int\_t $nEvt$: number of events.
+	\item Int\_t $n$
+	\begin{itemize}
+		\item $n = 0$ (standard mode): just calculate the pedestals and exchande in the parameter file which is previously declared.
+		\item $n = 1$ (special mode):  create pedestals and set time offsets to 0.
+	\end{itemize}
+\end{itemize}
+
+
+\subsubsection{fillHistograms}
+
+\begin{lstlisting}
+void fillHistograms(const char* dir, TString list,
+	const char* odir, const char* ofile, Int_t nEvt,
+ 	Int_t n,Int_t n2);
+\end{lstlisting}
+
+\begin{itemize}
+	\item const char* $dir$
+	\item TString $list$
+	\item const char* $odir$
+	\item const char* $ofile$
+	\item Int\_t $nEnv$
+	\item Int\_t $n$
+	\item Int\_t $n2$
+	
+\end{itemize}
+
+\subsubsection{getFileHitFinderPar}
+
+\begin{lstlisting}
+void getFileHitFinderPar( void );
+\end{lstlisting}
+
+It gets the variable TString $fileHitFinderPar$, the name of the file with hit finder params.
+
+\[\]
+
+\subsubsection{getFileHitFinderParOut}
+
+\begin{lstlisting}
+void getFileHitFinderParOut( void );
+\end{lstlisting}
+
+It gets the variable TString $fileHitFinderParOut$, the name of the file with hit finder params.
+
+\[\]
+
+\subsubsection{getFileLookupPar}
+
+\begin{lstlisting}
+void getFileLookupPar( void );
+\end{lstlisting}
+
+It gets the variable TString $fileLookupPar$, the name of the file with lookup params.
+
+\[\]
+
+\subsubsection{getFileTrackFinderPar}
+
+\begin{lstlisting}
+void getFileTrackFinderPar( void );
+\end{lstlisting}
+
+It gets the variable TString $fileTrackFinderPar$, the name of the file with track finder params.
+
+\[\]
+
+\subsubsection{getpEvent}
+
+\begin{lstlisting}
+HldEvent* getpEvent(void);
+\end{lstlisting}
+
+It returns the pointer HldEvent* $pEvent$.
+
+\[\]
+
+\subsubsection{getEventLimit}
+
+\begin{lstlisting}
+Int_t getEventLimit()
+\end{lstlisting}
+
+It returns the Int\_t $EventLimit$.
+
+\[\]
+
+\subsubsection{getEventNr}
+
+\begin{lstlisting}
+Int_t getEventNr()
+\end{lstlisting}
+
+It returns the Int\_t $EventNr$.
+
+\[\]
+
+\subsubsection{HexStrToInt}
+
+\begin{lstlisting}
+UInt_t HexStrToInt(const char* str) {
+	UInt_t t;
+	std::stringstream s;
+	s << std::hex << str;
+	s >> t;
+	return t;
+ }
+\end{lstlisting}
+
+It is easy to see that \texttt{HexStrToInt} takes a const char* $str$ as argument and returns its integer value as UInt\_t $t$.
+
+\[\]
+
+\subsubsection{setInputFile}
+
+\begin{lstlisting}
+std::string setInputFile(const char* filename);
+std::string setInputFile(const char* dir,const char* filename); 
+\end{lstlisting}
+
+It sets $filename$ as name of the \texttt{filename.hld} input file and returns a std::string \textit{inputFile} (\textit{wk 28.05}). If a directory $dir$ is passed as parameter, the location for \texttt{filename.hld} is changed to $dir$.
+
+\[\]
+
+\subsubsection{setFileHitFinderPar}
+
+\begin{lstlisting}
+void setFileHitFinderPar( TString fileName);
+\end{lstlisting}
+
+It sets $fileName$ to the variable TString $fileHitFinderPar$, the name of the file with hit finder params.
+
+\[\]
+
+\subsubsection{setFileHitFinderParOut}
+
+\begin{lstlisting}
+void setFileHitFinderParOut( TString fileName);
+\end{lstlisting}
+
+It sets $fileName$ to the variable TString $fileHitFinderParOut$, the name of the file with hit finder params.
+
+\[\]
+
+\subsubsection{setFileLookupPar}
+
+\begin{lstlisting}
+void setFileLookupPar( TString fileName);
+\end{lstlisting}
+
+It sets $fileName$ to the variable TString $fileLookupPar$, the name of the file with lookup params.
+
+\[\]
+
+\subsubsection{setFileTrackFinderPar}
+
+\begin{lstlisting}
+void setFileTrackFinderPar( TString fileName);
+\end{lstlisting}
+
+It sets $fileName$ to the variable TString $fileTrackFinderPar$, the name of the file with track finder params.
+
+\[\]
+
+\subsubsection{setpEvent}
+
+\begin{lstlisting}
+Bool_t setpEvent(Int_t subId);
+void setpEvent(HldEvent* evt);
+\end{lstlisting}
+
+It sets $pEvent$ (the current event read from file) by reading hld file, where $subId$ is the subevent id and returns $kTRUE$. If parameter is a pointer, pEvent is set as $evt$ and doesn't returns anything.
+
+\[\]
+
+\subsubsection{setRootFile}
+
+\begin{lstlisting}
+Bool_t setRootFile(const char* filename);
+\end{lstlisting}
+
+It sets $filename$ as name to a new root output file and returns the \textsc{root} specific constant $kTRUE$.
+
+\[\]
+
+
+\subsubsection{syncCheck}
+
+\begin{lstlisting}
+Int_t syncCheck(const char* dir, TString file, 
+	Int_t nEvt,Int_t n);
+\end{lstlisting}
+
+\begin{itemize}
+	\item const char* $dir$
+	\item TString $file$
+	\item Int\_t $nEnv$
+	\item Int\_t $n$
+	\begin{itemize}
+		\item $n = 0$ (standard mode): just calculate the pedestals and exchande in the parameter file which is previously declared.
+		\item $n = 1$ (special mode):  create pedestals and set time offsets to 0.
+	\end{itemize}
+	
+\end{itemize}
 
 \chapter{Kalman Filter}
 
