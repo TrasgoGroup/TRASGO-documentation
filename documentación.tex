@@ -1203,7 +1203,11 @@ Float_t z2);
 
 \subsection{Unpacker}
 
-Unpacker is the class which does \textit{... that things ...}, and its source code is in the trpcunpacker.cc and trpcunpacker.h files. It has some protected variables:
+Unpacker is the class which does \textit{... that things ...}, and its source code is in the trpcunpacker.cc and trpcunpacker.h files.
+
+
+
+Unpacker has some protected variables:
 
 \begin{itemize}
 	\item HldEvent* $pEvent$: current event read from file.
@@ -1216,6 +1220,28 @@ Unpacker is the class which does \textit{... that things ...}, and its source co
     \item Int\_t \textit{fpga\_code}: address of the data source (e.g. given fpga ) decoded from hld file.
     \item Int\_t $refCh$: 
 \end{itemize}
+
+
+
+\subsubsection{* The Constructors}
+
+\begin{lstlisting}
+Unpacker(const char* dir,const char* name, const char* odir, 
+	Int_t nEvt, TString luptab, TString calpar);
+\end{lstlisting}
+
+Using this construtor of unpacker we have access the data output of the tracking code. By executing this code into the \textsc{root} command line we can check whether or not what we rebuild is compatible with the current methods. Parameters:
+
+\begin{itemize}
+	\item const char* $dir$: Directory of input data, which is the output of Tragaldabas.
+	\item const char* $name$: Name of the file to unpack, (i. e. \texttt{tr18249041152.hld}.)
+	\item const char* $odir$: Output directory, here will appear the unpacked files.
+	\item Int\_t $nEvt$: Number of events (i. e. 1000).
+	\item TString $luptab$: Name of the luptable txt file (i. e. \texttt{luptable\_corr\_20180423.txt}).
+	\item TString $calpar$: Name of the CalPar txt file (i. e. \texttt{2018\_day\_203\_CalPars.txt}).
+\end{itemize}
+
+\[\]
 
 The methods of the Unpacker class are:
 
