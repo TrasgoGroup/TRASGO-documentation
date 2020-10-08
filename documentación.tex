@@ -889,7 +889,7 @@ Float_t z2);
 %	\end{itemize}
 	
 	\begin{align*}
-%	InputSaeta2Planes = [ (x2*z1-x1*z2)/Dz,\\
+%	InputSaeta2Planes \equiv \vec{S} = [ (x2*z1-x1*z2)/Dz,\\
 %	 (x1-x2)/Dz, \\
 %	 (y2*z1-y1*z2)/Dz, \\
 %	 (y1-y2)/Dz, \\
@@ -911,8 +911,13 @@ Float_t z2);
 %	 (t_1-t_2)/Dz
 	\end{array} \right),
 	\end{align*}
+	and where Float\_t $Dz = z1 - z2$. So that,
 	
-	and where Float\_t $Dz = z1 - z2$.
+	\begin{equation}
+	\notag
+	InputSaeta2Planes \equiv \vec{S} = (x_0, x_p, y_0, y_p, t_0, s_0)
+	\end{equation}
+	is the saeta vector in the parameters space represented with respect to the origin of coordinates.
 	
 	
 	\item TMatrixF $KMatrix$: the $K$ matrix with next values as arguments
@@ -957,7 +962,7 @@ TMatrixF KMatrix(TMatrixF SIn, Float_t z);
 	\end{array} \right)
 	\end{align*}
 	
-	\item TMatrixF $AVector$: the \textbf{measurement} (¿?) vector with next values as arguments
+	\item TMatrixF $AVector$: constructs the \textbf{measurement} (¿?) vector for a non-linear model with next values as arguments
 	
 	\begin{lstlisting}
 TMatrixF AVector(TMatrixF SIn, Float_t x, Float_t y, 
