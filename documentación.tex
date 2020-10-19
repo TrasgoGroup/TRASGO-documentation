@@ -142,6 +142,7 @@
 
 
 \chapter{Introduction}
+
 %\addcontentsline{toc}{chapter}{Introduction}
 
 \section{The Cosmic Rays}
@@ -215,9 +216,121 @@ Scripts in \texttt{/etc/nagios/objects/} are the configurations of the variables
 
 
 
+\chapter{Unpacking data from TRAGALDABAS}
+
+\section{DST\_Guide}
+
+En el directorio \texttt{/media/Datos2TB/username/tragaldabas/soft\_TT/} tenemos los siguientes archivos, que se pueden ejecutar por este orden:
+
+\begin{itemize}
+	\item \textit{createFileLists.py}: Genera las listas con paths absolutos los archivos \textit{tryydddhhmmss.hld} tanto del \texttt{/media/Datos2TB/tragaldabas/data/done} como del \texttt{/media/externalHD/Tragaldabas/data\_hld} y los guarda en archivos \textit{list\_yyyy\_day\_ddd.list}, uno por cada día de archivos .hld. Además crea una carpeta con ellos y unas listas \textit{listExternal.list} con los nombres de los ficheros que ha encontrado en cada disco duro.
+	
+	\item \textit{efficiency.cc}: La ayuda para compilar este código se encuentra en ./\textit{howtocompile.txt}
+	
+		\begin{lstlisting}[language=bash]
+$ g++ -Wall -g -O -fPIC 'root-config --cflags' <filename.cc>
+'root-config --glibs' 'root-config --libs' -L ./ -I ./ 
+-ltunpacker -o <analysis_exe>
+	\end{lstlisting}
+	donde \textless filename.cc\textgreater\ es en este caso \textit{efficiency.cc} y en \textless analysis\_exe\textgreater\ se le da el nombre que se quiera al archivo ejecutable que crea con los parámetros del detector.
+	
+	Antes de proceder a la compilación, definir manualmente dentro de \textit{efficiency.cc} (o descomentar, si ya están escritas) solamente las siguientes líneas:
+	\begin{itemize}
+	\item void doStaffCalibration:
+		\begin{itemize}
+			\item unpack.setFileLookupPar(path\_to\_luptab)
+		
+			Escoger la luptab correspondiente a las fechas para las cuales se están analizando estos datos concretos.
+			\item unpack.setFileHitFinderPar(``empty\_cal\_2016.txt")
+		
+			Estos datos son siempre los mismos.
+			\item unpack.setFileHitFinderParOut(``\textless my\_path\textgreater /20YYDST/pars/'' + day + ``\_CalPars.txt'')
+		
+			Aquí solamente introducir el path hacia tu directorio.
+			\item unpack.fillCalibration(``/media/Datos2TB/tragaldabas/data/done/'', ``../'' + fName, ``../qcalhistos2/'', day + ``\_qhistos.root'', 1000000, 0)
+		
+			En esta línea, introducir correctamente los paths.
+		\end{itemize}
+	\end{itemize}
+	
+	
+	\begin{itemize}
+		\item void doStaffAnalysis:
+		\begin{itemize}
+			\item fill.setFileLookupPar(`luptabs/luptab.txt'')
+			
+			Editar el path hacia la luptab correspondiente.
+			
+			\item fill.setFileHitFinderPath(``/day\_CalPars.txt'')
+			
+			El output de unpack.setFileHitFinderParOut() será el input de este método: introducir el path hacia el mismo.
+		\end{itemize}
+	\end{itemize}
+	
+	\item \textit{multiThreadRun.py}: Multiprocesado en varios cores para agilizar el proceso. Se lanza desde bash de la siguiente forma
+	
+	\begin{lstlisting}[language=bash]
+$ python3 multithreadRun.py ./analysis_exe lists_name
+	\end{lstlisting}
+	siendo el primer argumento el nombre del archivo ejecutable devuelto por \textit{efficiency.cc} y el segundo el archivo con la lista de nombres devuelto por \textit{createFileLists.py}.
+	
+	\textbf{20XXDST/} new\_results.* para ver el root y en cuentas de celdas un valor de 2500 es razonable como máximo.
+\end{itemize}
+
+Al lanzar el ejecutable anterior, se generan archivos en los directorios \texttt{qcalhistos}\footnote{Histogramas de calibración} y \texttt{pars}, los cuales hay que crear manualmente junto a \texttt{../20YYDST/results}, donde \texttt{20YY} es el año.
+
+``Matar celdas que hayan registrado ruído y volver a correr sobre los .hld''
+
+\subsection{Proceso:}
+
+(¿?) Primero creamos el archivo vacío de celdas activas con:
+
+\$ root -l CreateActiveCells.c
+
+y a continuación
+
+\$ make clean
+
+\$make
+
+Blah blah
+
+...
+
+Crear directorio \texttt{20YYDST} manualmente en \texttt{/media/Datos2TB/username/} como se muestra en la figura \ref{fg:20YYDSTdir}
+
+\begin{figure}[!h]
+\begin{forest}
+  pic dir tree,
+  pic root,
+  for tree={directory,},
+	[/media/Datos2TB/username/
+		[20YYDST/
+			[qcalhistos/]
+			[results/]
+			[pars/]
+		]
+		[...]
+		[..., file]
+	]
+\end{forest}
+\label{fg:20YYDSTdir}
+\caption{Directorio \texttt{20YYDST/} y subdirectorios.}
+\end{figure}
+
+A continuación, ejecutar los programas anteriormente mencionados. Notar que se pueden usar las flags:
+\begin{itemize}
+	\item \texttt{-htop}: para ver procesos
+	\item \texttt{root -l GoodActiveCells.root}: para abrir con \texttt{new TBrowser} más fácilmente (se queda arriba de todo en el árbol)
+	\item \texttt{hadd -f dst2018\_full.root *.root}: Une varios histogramas root (*.root) en un solo archivo (dst2038\_full.root).
+\end{itemize}
+
+
 
 
 \chapter{Software Documentation}
+
+
 
 \section{The soft\_TT directory}
 
