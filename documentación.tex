@@ -270,7 +270,7 @@ $ g++ -Wall -g -O -fPIC 'root-config --cflags' <filename.cc>
 	\item \textit{multiThreadRun.py}: Multiprocesado en varios cores para agilizar el proceso. Se lanza desde bash de la siguiente forma
 	
 	\begin{lstlisting}[language=bash]
-$ python3 multithreadRun.py ./analysis_exe lists_name
+$ python3 multithreadRun.py ./analysis_exe lists_name.txt
 	\end{lstlisting}
 	siendo el primer argumento el nombre del archivo ejecutable devuelto por \textit{efficiency.cc} y el segundo el archivo con la lista de nombres devuelto por \textit{createFileLists.py}.
 	
@@ -321,9 +321,26 @@ Crear directorio \texttt{20YYDST} manualmente en \texttt{/media/Datos2TB/usernam
 A continuación, ejecutar los programas anteriormente mencionados. Notar que se pueden usar las flags:
 \begin{itemize}
 	\item \texttt{-htop}: para ver procesos
-	\item \texttt{root -l GoodActiveCells.root}: para abrir con \texttt{new TBrowser} más fácilmente (se queda arriba de todo en el árbol)
+	\item \texttt{root -l GoodActiveCells.root}: para abrir con \texttt{new TBrowser} más fácilmente (se queda arriba de todo en el árbol). Con esto se pueden ver las celdas muertas
 	\item \texttt{hadd -f dst2018\_full.root *.root}: Une varios histogramas root (*.root) en un solo archivo (dst2038\_full.root).
 \end{itemize}
+
+
+Crear archivo vacio sin abrirlo
+
+\$ touch luptab.txt
+
+\$ ln -sf luptab\_20201013.txt luptab.txt
+
+abrir efficiency.cc y cambiar paths
+
+Exportar 
+\$ export LD\_LIBRARY\_PATH=\$LD\_LIBRARY\_PATH:/path/to/libtunpacker.so
+
+Que debería estar en mi directorio /media/.../mcruces/tragaldabas/soft\_TT/
+
+
+------
 
 
 
