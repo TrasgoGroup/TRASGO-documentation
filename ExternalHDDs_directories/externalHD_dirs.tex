@@ -1,0 +1,329 @@
+\documentclass[a4paper]{article}
+%\usepackage[subpreambles=true]{standalone}
+\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+%\lstset { %
+%%    language=C++,
+%    backgroundcolor=\color{black!10}, % set backgroundcolor
+%%    breaklines=true,
+%%    frame=tlbr,
+%    xleftmargin=0.5cm,
+%    basicstyle=\ttfamily,
+%    basicstyle=\footnotesize,% basic font setting
+%}
+
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C++,
+  morekeywords={*, Int_t, UInt_t, Float_t, Bool_t, TMatrixF, TString, ClonesArray, TClonesArray}, 
+  numbers=left,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  backgroundcolor=\color{yellow!10},
+  identifierstyle=\color{black},
+  stringstyle=\color{orange}\itfamily,
+}
+
+\lstdefinestyle{customsh}{
+  language=bash,
+  basicstyle=\color{green!60}\small\ttfamily,
+  numbers=left,
+  numberstyle=\color{black}\small\ttfamily,
+  numbersep=3pt,
+  frame=tb,
+  showstringspaces=false,
+  breaklines=true,
+  columns=fullflexible,
+  backgroundcolor=\color{black!85},
+  linewidth=0.9\linewidth,
+  xleftmargin=\parindent,  % 0.05\linewidth,
+  xrightmargin=-0.1\linewidth
+}
+
+\usepackage{hyperref}
+\usepackage{breakurl}
+
+\let\vec\mathbf  % Bold vectors
+
+\graphicspath{{images/}}
+
+\usepackage[edges]{forest}
+\definecolor{folderbg}{RGB}{124,166,198}
+\definecolor{folderborder}{RGB}{110,144,169}
+\newlength\Size
+\setlength\Size{4pt}
+\tikzset{%
+  folder/.pic={%
+    \filldraw [draw=folderborder, top color=folderbg!50, bottom color=folderbg] (-1.05*\Size,0.2\Size+5pt) rectangle ++(.75*\Size,-0.2\Size-5pt);
+    \filldraw [draw=folderborder, top color=folderbg!50, bottom color=folderbg] (-1.15*\Size,-\Size) rectangle (1.15*\Size,\Size);
+  },
+  file/.pic={%
+    \filldraw [draw=folderborder, top color=folderbg!5, bottom color=folderbg!10] (-\Size,.4*\Size+5pt) coordinate (a) |- (\Size,-1.2*\Size) coordinate (b) -- ++(0,1.6*\Size) coordinate (c) -- ++(-5pt,5pt) coordinate (d) -- cycle (d) |- (c) ;
+  },
+}
+\forestset{%
+  declare autowrapped toks={pic me}{},
+  declare boolean register={pic root},
+  pic root=0,
+  pic dir tree/.style={%
+    for tree={%
+      folder,
+      font=\ttfamily,
+      grow'=0,
+    },
+    before typesetting nodes={%
+      for tree={%
+        edge label+/.option={pic me},
+      },
+      if pic root={
+        tikz+={
+          \pic at ([xshift=\Size].west) {folder};
+        },
+        align={l}
+      }{},
+    },
+  },
+  pic me set/.code n args=2{%
+    \forestset{%
+      #1/.style={%
+        inner xsep=2\Size,
+        pic me={pic {#2}},
+      }
+    }
+  },
+  pic me set={directory}{folder},
+  pic me set={file}{file},
+}
+
+\title{Distribución de directorios en HDD externalHD}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Directorios superiores}
+
+\begin{forest}
+  pic dir tree,
+  pic root,
+  for tree={directory,},
+	[/media/externalHD/
+		[cosmicHades/
+			[anaCosmicsDataSplit20121204\_i.root, file]
+			[....root, file]
+			[makeCosmicsAna20121107.C, file]
+			[makeCosmicStatAna.C, file]
+		]
+		[damian/
+			[soft/]
+		]
+		[lost+found/ \textit{$\rightarrow$ vacío}]
+		[mabbrescia/ \textit{$\rightarrow$ vacío}]
+		[Tragaldabas/
+			[backups/]
+			[data\_hld/]
+			[scripts/]
+		]
+		[tristan/]
+	]
+\end{forest}
+
+
+
+\subsection{Directorio damian/soft/}
+
+\begin{forest}
+  pic dir tree,
+  pic root,
+  for tree={directory,},
+	[/media/externalHD/damian/soft/
+		[dt\texttt{[...]}.pdf, file]
+		[dtime\texttt{[...]}.pdf, file]
+		[eff\texttt{[...]}.pdf, file]
+		[figure1.pdf, file]
+		[q1\_q3.pdf]
+		[software/
+			[ana/]
+			[anaTristan.m, file]
+			[bin/]
+			[conf/]
+			[createReport.m, file]
+			[daq/]
+			[dc/]
+			[dcs.m, file]
+			[dst\_out2018/]
+			[old/]
+			[sendReport\texttt{[...]}.m, file]
+			[unpacking.m, file]
+			[utils/]
+		]
+		[tragaldabas/
+			[ttrack3planes.cc, file]
+			[ttrack3planesf.cc, file]
+		]
+	]
+\end{forest}
+
+\subsection{Directorio Tragaldabas/}
+
+\begin{forest}
+  pic dir tree,
+  pic root,
+  for tree={directory,},
+	[/media/externalHD/Tragaldabas/
+		[backups/
+			[.lastDate \textit{$\rightarrow$ oculto}, file]
+			[tarschecksum.md5, file]
+			[Tragaldabas/
+				[RAW/
+					[DAQ0/
+						[2016/ \textit{$\rightarrow$ desde 1 May. hasta 20 Dic.}
+							[05/
+								[tr160501.tar.bz2, file]
+								[tr1605\texttt{[...]}.tar.bz2, file]
+								[tr160531.tar.bz2, file]
+							]
+							[\texttt{[...]}/]
+							[12/
+								[tr161201.tar.bz2, file]
+								[tr1612\texttt{[...]}.tar.bz2, file]
+								[tr161220.tar.bz2, file]
+							]
+						]
+					]
+				]
+			]
+		]
+		[data\_hld/
+			[checksum.md5, file]
+			[consolidados/ $\rightarrow$ Tragaldabas/ $\rightarrow$ RAW/ $\rightarrow$ DAQ0/ $\rightarrow$ \textit{vacío}]
+			[pro/
+				[tr15mmdd.tar.bz2 $\rightarrow$ \textit{desde 1 Ene. hasta 31 Mar.}, file]
+			]
+			[tr15071192808.hld, file]
+			[tr\texttt{[...]}.hld, file]
+			[tr16366234600.hld, file]
+		]
+		[scripts/]
+	]
+\end{forest}
+
+\subsubsection{Subdirectorio Tragaldabas/scripts/}
+
+\begin{forest}
+  pic dir tree,
+  pic root,
+  for tree={directory,},
+	[/media/externalHD/Tragaldabas/scripts/
+		[backup\_tars.sh, file]
+		[backup\_tars.v1.sh, file]
+		[check\_tars.sh, file]
+		[create\_one\_tar.sh, file]
+		[create\_tars.sh, file]
+		[create\_tars.sh.orig, file]
+		[create\_tars.v1.sh, file]
+		[md5, file]
+		[outputs/
+			[createTars\_2016-05-12\_10:31.log, file]
+			[createTars\_2016-05-12\_11:46.log, file]
+			[createTars\_2016-05-19\_20:15.log, file]
+		]
+		[test\_create\_tars.sh, file]
+		[testTars\_cesga.sh, file]
+	]
+\end{forest}
+
+\subsection{Directorio tristan/}
+
+\begin{forest}
+  pic dir tree,
+  pic root,
+  for tree={directory,},
+	[/media/externalHD/tristan/
+		[dabc\_2018/]
+		[sarmiento\_dic2018/
+			[Metadatos/ $\rightarrow$ 29SG20181116/
+				[cdi/
+					[29SG20181116\_samples\_and\_stations\_with\_pos.csv, file]
+					[..., file]
+				]
+				[csr/]
+				[data/]
+			]
+			[Posicion-COG-SOG\_5\_perSg/]
+			[SADO/]
+			[TRACK/]
+		]
+		[st\_2018/]
+		[system/]
+	]
+\end{forest}
+
+Continuar en tristan/sarmiendo/Metadatos/cdi/
+
+\subsubsection{Subdirectorio tristan/dabc\_2018/}
+
+\begin{forest}
+  pic dir tree,
+  pic root,
+  for tree={directory,},
+	[/media/externalHD/tristan/dabc\_2018/
+		[badtar/
+			[dabc18339000330.hld.gz.tar, file]
+			[dabc183\texttt{[...]}.hld.gz.tar, file]
+			[dabc18340205559.hld.gz.tar, file]
+		]
+		[media/
+			[externalDrive/ $\rightarrow$ data/ $\rightarrow$ hlds/
+				[dabc18345095320.hld, file]
+				[done/
+					[dabc18312150327.hld.gz.tar, file]
+					[dabc183\texttt{[...]}.hld.gz.tar, file]
+					[dabc18345094826.hld.gz.tar, file]
+				]
+			]
+		]
+		[tar/
+			[dabc18312150327.hld.gz.tar, file]
+			[dabc183\texttt{[...]}.hld.gz.tar, file]
+			[dabc18345095320.hld.gz.tar, file]
+		]
+	]
+\end{forest}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

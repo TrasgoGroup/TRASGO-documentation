@@ -1,0 +1,285 @@
+\documentclass[a4paper]{article}
+%\usepackage[subpreambles=true]{standalone}
+\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+%\lstset { %
+%%    language=C++,
+%    backgroundcolor=\color{black!10}, % set backgroundcolor
+%%    breaklines=true,
+%%    frame=tlbr,
+%    xleftmargin=0.5cm,
+%    basicstyle=\ttfamily,
+%    basicstyle=\footnotesize,% basic font setting
+%}
+
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C++,
+  morekeywords={*, Int_t, UInt_t, Float_t, Bool_t, TMatrixF, TString, ClonesArray, TClonesArray}, 
+  numbers=left,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  backgroundcolor=\color{yellow!10},
+  identifierstyle=\color{black},
+  stringstyle=\color{orange}\itfamily,
+}
+
+\lstdefinestyle{customsh}{
+  language=bash,
+  basicstyle=\color{green!60}\small\ttfamily,
+  numbers=left,
+  numberstyle=\color{black}\small\ttfamily,
+  numbersep=3pt,
+  frame=tb,
+  showstringspaces=false,
+  breaklines=true,
+  columns=fullflexible,
+  backgroundcolor=\color{black!85},
+  linewidth=0.9\linewidth,
+  xleftmargin=\parindent,  % 0.05\linewidth,
+  xrightmargin=-0.1\linewidth
+}
+
+\usepackage{hyperref}
+\usepackage{breakurl}
+
+\let\vec\mathbf  % Bold vectors
+
+\graphicspath{{images/}}
+
+\usepackage[edges]{forest}
+\definecolor{folderbg}{RGB}{124,166,198}
+\definecolor{folderborder}{RGB}{110,144,169}
+\newlength\Size
+\setlength\Size{4pt}
+\tikzset{%
+  folder/.pic={%
+    \filldraw [draw=folderborder, top color=folderbg!50, bottom color=folderbg] (-1.05*\Size,0.2\Size+5pt) rectangle ++(.75*\Size,-0.2\Size-5pt);
+    \filldraw [draw=folderborder, top color=folderbg!50, bottom color=folderbg] (-1.15*\Size,-\Size) rectangle (1.15*\Size,\Size);
+  },
+  file/.pic={%
+    \filldraw [draw=folderborder, top color=folderbg!5, bottom color=folderbg!10] (-\Size,.4*\Size+5pt) coordinate (a) |- (\Size,-1.2*\Size) coordinate (b) -- ++(0,1.6*\Size) coordinate (c) -- ++(-5pt,5pt) coordinate (d) -- cycle (d) |- (c) ;
+  },
+}
+\forestset{%
+  declare autowrapped toks={pic me}{},
+  declare boolean register={pic root},
+  pic root=0,
+  pic dir tree/.style={%
+    for tree={%
+      folder,
+      font=\ttfamily,
+      grow'=0,
+    },
+    before typesetting nodes={%
+      for tree={%
+        edge label+/.option={pic me},
+      },
+      if pic root={
+        tikz+={
+          \pic at ([xshift=\Size].west) {folder};
+        },
+        align={l}
+      }{},
+    },
+  },
+  pic me set/.code n args=2{%
+    \forestset{%
+      #1/.style={%
+        inner xsep=2\Size,
+        pic me={pic {#2}},
+      }
+    }
+  },
+  pic me set={directory}{folder},
+  pic me set={file}{file},
+}
+
+\title{Distribución de directorios en HDD Datos2TB}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Directorios superiores}
+
+\begin{forest}
+  pic dir tree,
+  pic root,
+  for tree={directory,},
+	[/media/Datos2TB/
+		[tragaldabas/
+			[data/]
+			[dst/]
+			[external/
+				[md5, file]
+				[md5.tar.gz, file]
+			]
+			[git/
+				[gitolite-admin/
+					[conf/]
+					[keydir/]
+				]
+			]
+			[historical\_data/]
+			[luptab/
+				[luptab\_20yymmdd.txt, file]
+				[....txt, file]
+			]
+			[scripts/]
+		]
+		[users]
+		[...]
+	]
+\end{forest}
+
+\subsection{Directorio data/}
+
+\begin{forest}
+  pic dir tree,
+  pic root,
+  for tree={directory,},
+	[/media/Datos2TB/tragaldabas/data/
+		[done/
+			[tryydddhhmmss.hld, file]
+			[....hld, file]
+		]
+		[Done -> done/]
+		[matlab
+			[tryydddhhmmss\_TRBi.mat, file]
+			[....mat, file]
+		]
+		[sync
+			[tryydddhhmmss\_sync\_TRBi.mat, file]
+			[....mat, file]
+		]
+	]
+\end{forest}
+
+\subsection{Directorio dst/}
+
+\begin{forest}
+  pic dir tree,
+  pic root,
+  for tree={directory,},
+	[/media/Datos2TB/tragaldabas/dst/
+		[ascii/
+			[diferential\_specialDST20yy\_h\_flux2\_M\_n\_D\_20yymmdd.txt, file]
+			[....txt, file]
+		]
+		[root
+			[DST201712/
+				[specialDST20yy.root, file]			
+				[....root, file]
+			]
+			[histograms\_20yy.root, file]
+			[....root, file]
+		]
+		[scripts
+			[createAsciiFromRoot.C, file]
+			[createAsciiFromRoot\_C.so, file]
+			[diferential\_histosDST20yy\_h\_flux2\_M\_n\_D\_20yymmdd.txt, file]
+			[integrated\_histos\_20yy\_h\_flux3\_M\_n\_D\_20yymmdd.txt, file]
+			[....txt, file]
+		]
+	]
+\end{forest}
+
+\subsection{Directorio historical\_data/}
+
+\begin{forest}
+  pic dir tree,
+  pic root,
+  for tree={directory,},
+	[/media/Datos2TB/tragaldabas/historical\_data/
+		[nagios\_graphs/
+			[2017/
+				[2017mmdd/
+					[corrientes\_Plano\_n.png, file]
+					[humedad\_Plano\_n.png, file]
+					[presion\_Plano\_n.png, file]
+					[temperatura\_Plano\_n.png, file]
+					[triggers.png, file]
+				]
+			]
+			[.../]
+			[2029/]
+		]
+		[rrd\_files/
+			[trigger\_rate\_20171106\_144413.rrd, file]
+		]
+	]
+\end{forest}
+
+\subsection{Directorio scripts/}
+
+\begin{forest}
+  pic dir tree,
+  pic root,
+  for tree={directory,},
+	[/media/Datos2TB/tragaldabas/scripts/
+		[backup\_slowcontrol.sh, file]
+		[backup\_tars.sh, file]
+		[backup\_tars.v1.sh, file]
+		[check\_tars.sh, file]
+		[reorderCurrData.py, file]
+		[..., file]
+		[outputs/
+			[createTars\_20yy-mm-dd\_HH:MM.log, file]
+		]
+		[test/
+			[Arduino0/
+				[OpCurrent\_yymmdd\_hhmm.txt, file]
+				[....txt, file]
+			]
+			[Arduino1/
+				[EnvironmentMeasurements\_yymmdd.txt, file]
+				[....txt, file]
+			]
+			[raspberry06/
+				[h04/
+					[yyyy yyyy-mm-dd.txt, file]
+					[....txt, file]
+				]
+			]
+		]
+	]
+\end{forest}
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
