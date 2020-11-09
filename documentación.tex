@@ -9,21 +9,55 @@
 \usepackage{amsmath}
 \usepackage{listings}
 \usepackage{xcolor}
-\lstset { %
-    language=C++,
-    backgroundcolor=\color{black!10}, % set backgroundcolor
-%    breaklines=true,
-%    frame=tlbr,
-    xleftmargin=0.5cm,
-%%    basicstyle=\ttfamily,
-    basicstyle=\footnotesize,% basic font setting
+%\lstset { %
+%%    language=C++,
+%    backgroundcolor=\color{black!10}, % set backgroundcolor
+%%    breaklines=true,
+%%    frame=tlbr,
+%    xleftmargin=0.5cm,
+%    basicstyle=\ttfamily,
+%    basicstyle=\footnotesize,% basic font setting
+%}
+
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C++,
+  morekeywords={*, Int_t, UInt_t, Float_t, Bool_t, TMatrixF, TString, ClonesArray, TClonesArray}, 
+  numbers=left,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  backgroundcolor=\color{yellow!10},
+  identifierstyle=\color{black},
+  stringstyle=\color{orange}\itfamily,
 }
 
+\lstdefinestyle{customsh}{
+  language=bash,
+  basicstyle=\color{green!60}\small\ttfamily,
+  numbers=left,
+  numberstyle=\color{black}\small\ttfamily,
+  numbersep=3pt,
+  frame=tb,
+  showstringspaces=false,
+  breaklines=true,
+  columns=fullflexible,
+  backgroundcolor=\color{black!85},
+  linewidth=0.9\linewidth,
+  xleftmargin=\parindent,  % 0.05\linewidth,
+  xrightmargin=-0.1\linewidth
+}
+
+\usepackage{hyperref}
+\usepackage{breakurl}
 
 \let\vec\mathbf  % Bold vectors
 
 \graphicspath{{images/}}
-
 
 \usepackage[edges]{forest}
 \definecolor{folderbg}{RGB}{124,166,198}
@@ -177,35 +211,71 @@ Scripts in \texttt{/etc/nagios/objects/} are the configurations of the variables
 
 
 
+%\begin{figure}
+%\begin{forest}
+%  pic dir tree,
+%  pic root,
+%  for tree={directory,},
+%	[/etc/nagios/
+%		[...]
+%		[..., file]
+%		[scripts/
+%			[check\_allAmbient.py, file]
+%			[check\_allPower.py, file]
+%			[check\_all.py, file]
+%			[sensorHighVoltage\_tragaldabas.py, file]
+%			[sensorHumidity\_tragaldabas.py, file]
+%			[sensorPressure\_tragaldabas.py, file]
+%			[sensorTemperature\_tragaldabas.py, file]
+%		]
+%		[objects/
+%			[commands.cfg, file]
+%			[contacts.cfg, file]
+%			[hosts.cfg, file]
+%			[printer.cfg, file]
+%			[services.cfg, file]
+%			[checkcommands.cfg, file]
+%		]
+%	]
+%\end{forest}
+%\label{fg:directoryTree}
+%\caption{Directory tree of Trucha, where the programs for flow control are stored.}
+%\end{figure}
+
+...
+
 \begin{figure}
 \begin{forest}
   pic dir tree,
   pic root,
   for tree={directory,},
-	[/etc/nagios/
+	[/media/Datos2TB/
+		[tragaldabas/
+			[data/
+				[done/
+				[... tryydddhhmmss.hld, file]
+				]
+				[Done -> done/]
+				[matlab
+				[... tryydddhhmmss\_TRBi.mat, file]
+				]
+				[sync
+				[... tryydddhhmmss\_sync\_TRBi.mat, file]
+				]		
+			]
+			[dst/]
+			[external/]
+			[git/]
+			[historical\_data/]
+			[luptab/]
+			[scripts/]
+		]
+		[users]
 		[...]
-		[..., file]
-		[scripts/
-			[check\_allAmbient.py, file]
-			[check\_allPower.py, file]
-			[check\_all.py, file]
-			[sensorHighVoltage\_tragaldabas.py, file]
-			[sensorHumidity\_tragaldabas.py, file]
-			[sensorPressure\_tragaldabas.py, file]
-			[sensorTemperature\_tragaldabas.py, file]
-		]
-		[objects/
-			[commands.cfg, file]
-			[contacts.cfg, file]
-			[hosts.cfg, file]
-			[printer.cfg, file]
-			[services.cfg, file]
-			[checkcommands.cfg, file]
-		]
 	]
 \end{forest}
-\label{fg:directoryTree}
-\caption{Directory tree of Trucha, where the programs for flow control are stored.}
+\label{fg:Datos2TBTree}
+\caption{Directory tree of Trucha, inside the HDD with 2 TB of storage.}
 \end{figure}
 
 
@@ -225,52 +295,43 @@ En el directorio \texttt{/media/Datos2TB/username/tragaldabas/soft\_TT/} tenemos
 \begin{itemize}
 	\item \textit{createFileLists.py}: Genera las listas con paths absolutos los archivos \textit{tryydddhhmmss.hld} tanto del \texttt{/media/Datos2TB/tragaldabas/data/done} como del \texttt{/media/externalHD/Tragaldabas/data\_hld} y los guarda en archivos \textit{list\_yyyy\_day\_ddd.list}, uno por cada día de archivos .hld. Además crea una carpeta con ellos y unas listas \textit{listExternal.list} con los nombres de los ficheros que ha encontrado en cada disco duro.
 	
-	\item \textit{efficiency.cc}: La ayuda para compilar este código se encuentra en ./\textit{howtocompile.txt}
+	\item \textit{efficiency.cc}: La ayuda para compilar este código se encuentra en \textit{howtocompile.txt}
 	
-		\begin{lstlisting}[language=bash]
-$ g++ -Wall -g -O -fPIC 'root-config --cflags' <filename.cc>
-'root-config --glibs' 'root-config --libs' -L ./ -I ./ 
--ltunpacker -o <analysis_exe>
+	\begin{lstlisting}[style=customsh]
+[username@fptrucha soft_TT]$ g++ -Wall -g -O -fPIC 'root-config --cflags' <filename.cc> 'root-config --glibs' 'root-config --libs' -L ./ -I ./ -ltunpacker -o <analysis_exe>
 	\end{lstlisting}
 	donde \textless filename.cc\textgreater\ es en este caso \textit{efficiency.cc} y en \textless analysis\_exe\textgreater\ se le da el nombre que se quiera al archivo ejecutable que crea con los parámetros del detector.
 	
 	Antes de proceder a la compilación, definir manualmente dentro de \textit{efficiency.cc} (o descomentar, si ya están escritas) solamente las siguientes líneas:
-	\begin{itemize}
-	\item void doStaffCalibration:
-		\begin{itemize}
-			\item unpack.setFileLookupPar(path\_to\_luptab)
-		
-			Escoger la luptab correspondiente a las fechas para las cuales se están analizando estos datos concretos.
-			\item unpack.setFileHitFinderPar(``empty\_cal\_2016.txt")
-		
-			Estos datos son siempre los mismos.
-			\item unpack.setFileHitFinderParOut(``\textless my\_path\textgreater /20YYDST/pars/'' + day + ``\_CalPars.txt'')
-		
-			Aquí solamente introducir el path hacia tu directorio.
-			\item unpack.fillCalibration(``/media/Datos2TB/tragaldabas/data/done/'', ``../'' + fName, ``../qcalhistos2/'', day + ``\_qhistos.root'', 1000000, 0)
-		
-			En esta línea, introducir correctamente los paths.
-		\end{itemize}
-	\end{itemize}
 	
+	\begin{lstlisting}[style=customc]
+void doStaffCalibration(char* path,char* name){
+	unpack.setFileLookupPar(<path_to_luptab>)
+	// Escoger la luptab correspondiente a las fechas para las cuales se estan analizando estos datos concretos.
+	unpack.setFileHitFinderPar(`empty_cal_2016.txt>`)
+	// Estos datos son siempre los mismos.
+	unpack.setFileHitFinderParOut(`<my_path>/20YYDST/pars/` + day + `_CalPars.txt`)
+	// Aqui solamente introducir el path hacia tu directorio soft_TT.
+	unpack.fillCalibration(`/media/Datos2TB/tragaldabas/data/done/`, `../` + fName, `../qcalhistos2/`, day + `\_qcalhistos.root`, 1000000, 0)
+	// En esta linea, introducir correctamente los paths.
+	}
 	
-	\begin{itemize}
-		\item void doStaffAnalysis:
-		\begin{itemize}
-			\item fill.setFileLookupPar(`luptabs/luptab.txt'')
-			
-			Editar el path hacia la luptab correspondiente.
-			
-			\item fill.setFileHitFinderPath(``/day\_CalPars.txt'')
-			
-			El output de unpack.setFileHitFinderParOut() será el input de este método: introducir el path hacia el mismo.
-		\end{itemize}
-	\end{itemize}
+void doStaffAnalysis(char* path,char* name){
+	fill.setFileLookupPar(`luptabs/luptab.txt`)
+	// Editar el path hacia la luptab correspondiente.
+	fill.setFileHitFinderPath(`/day\_CalPars.txt`)
+	// El output de unpack.setFileHitFinderParOut() sera el input de este metodo: introducir el path hacia el mismo.
+	}
 	
+	/* 
+	[...]
+	*/
+	\end{lstlisting}
+
 	\item \textit{multiThreadRun.py}: Multiprocesado en varios cores para agilizar el proceso. Se lanza desde bash de la siguiente forma
 	
-	\begin{lstlisting}[language=bash]
-$ python3 multithreadRun.py ./analysis_exe lists_name.txt
+	\begin{lstlisting}[style=customsh]
+[username@fptrucha soft_TT]$ python3 multithreadRun.py ./analysis_exe lists_name.txt
 	\end{lstlisting}
 	siendo el primer argumento el nombre del archivo ejecutable devuelto por \textit{efficiency.cc} y el segundo el archivo con la lista de nombres devuelto por \textit{createFileLists.py}.
 	
@@ -284,14 +345,14 @@ Al lanzar el ejecutable anterior, se generan archivos en los directorios \texttt
 \subsection{Proceso:}
 
 (¿?) Primero creamos el archivo vacío de celdas activas con:
-
-\$ root -l CreateActiveCells.c
-
+\begin{lstlisting}[style=customsh]
+[username@fptrucha soft_TT]$ $ root -l CreateActiveCells.c
+\end{lstlisting}
 y a continuación
-
-\$ make clean
-
-\$make
+\begin{lstlisting}[style=customsh]
+[username@fptrucha soft_TT]$ $ make clean
+[username@fptrucha soft_TT]$ $ make
+\end{lstlisting}
 
 Blah blah
 
@@ -320,27 +381,75 @@ Crear directorio \texttt{20YYDST} manualmente en \texttt{/media/Datos2TB/usernam
 
 A continuación, ejecutar los programas anteriormente mencionados. Notar que se pueden usar las flags:
 \begin{itemize}
-	\item \texttt{-htop}: para ver procesos
+	\item \texttt{htop}: comando para ver procesos
 	\item \texttt{root -l GoodActiveCells.root}: para abrir con \texttt{new TBrowser} más fácilmente (se queda arriba de todo en el árbol). Con esto se pueden ver las celdas muertas
 	\item \texttt{hadd -f dst2018\_full.root *.root}: Une varios histogramas root (*.root) en un solo archivo (dst2038\_full.root).
 \end{itemize}
 
 
 Crear archivo vacio sin abrirlo
+\begin{lstlisting}[style=customsh]
+[username@fptrucha soft_TT]$ touch luptab.txt
+[username@fptrucha soft_TT]$ ln -sf luptab\_20201013.txt luptab.txt
+\end{lstlisting}
+y crear un hard link\footnote{También llamado enlace simbólico.}. A continuación abrir \textit{efficiency.cc} y cambiar paths.
 
-\$ touch luptab.txt
-
-\$ ln -sf luptab\_20201013.txt luptab.txt
-
-abrir efficiency.cc y cambiar paths
-
-Exportar 
-\$ export LD\_LIBRARY\_PATH=\$LD\_LIBRARY\_PATH:/path/to/libtunpacker.so
-
-Que debería estar en mi directorio /media/.../mcruces/tragaldabas/soft\_TT/
+Exportar al load library path
+\begin{lstlisting}[style=customsh]
+[username@fptrucha any_dir]$ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:<path/to/libtunpacker.so>
+\end{lstlisting}
+donde \texttt{<path/to/libtunpacker.so>} es el path absoluto al direcotrio \texttt{/media/.../ username/tragaldabas/soft\_TT/}
 
 
 ------
+
+
+\chapter{Migración: \texttt{fpegaes2} $\rightarrow$ RaspBerry Pi \textgreater\ Nagios}
+
+Para hacer la migración de los sensores de fpegaes2.usc.es a la Raspberry Pi 172.16.23.61, primero debemos familiarizarnos con las bases de datos RRD (Round Robin Database)\footnote{Nota: Dos o tres tablas relacionales, estructura para guardar datos con un número fijo de entradas.}. Una introducción a estas bases de datos se puede encontrar en:
+
+\url{https://www.loriotpro.com/Products/On-line_Documentation_V5/LoriotProDoc_EN/V22-RRD_Collector_RRD_Manager/V22-A1_Introduction_RRD_EN.htm}
+
+El funcionamiento de Nagios Graph y PNP4Nagios está en los siguientes links\footnote{Esto es lo menos crítico, porque en fpegaes2.usc.es se ve como está instalado el nagios graph y en fptrucha.usc.es está el PNP4Nagios (PNP4Nagios fuerza a tener una salida y hay que forzarlo (?).}
+
+Nagiosgraph Manual Page:
+
+\url{http://nagios.fm4dd.com/nagiosgraph/nagiosgraph-man.shtm}
+
+PNP4Nagios Docs:
+
+\url{http://docs.pnp4nagios.org/pnp-0.6/start}
+
+(¿?) Buscar en fptrucha.usc.es los archivos python de cómo se accede a las bases de datos
+
+
+\section{\texttt{fpegaes2}}
+
+\subsection{Sensores}
+Sensores en trucha \texttt{/etc/nagios/scripts/}
+
+\subsection{Sample CGI Configuration File for Nagios 3.2.3}
+
+\texttt{fptrucha.usc.es:/etc/nagios/cgi.cfg.fpegaes2}
+
+\subsubsection{Main Configuration File}
+This tells the CGIs where to find your main configuration file. The CGIs will read the main and host config files for any other data they might need.
+
+\texttt{/etc/nagios/nagios.cgf}
+
+
+\subsubsection{Physical HTML Path}
+This is the path where the HTML files for Nagios reside.  This value is used to locate the logo images needed by the statusmap and statuswrl CGIs.
+
+\texttt{/usr/share/nagios}
+
+
+\subsubsection{URL HTML Path}
+This is the path portion of the URL that corresponds to the physical location of the Nagios HTML files (as defined above). This value is used by the CGIs to locate the online documentation and graphics.  If you access the Nagios pages with an URL like
+http://www.myhost.com/nagios, 
+this value should be ``/nagios'' (without the quotes).
+
+\texttt{/nagios}
 
 
 
@@ -381,7 +490,7 @@ The methods of TRpcSaeta class are:
 
 \subsubsection{getCell}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Int_t getCell();
 \end{lstlisting}
 
@@ -391,7 +500,7 @@ It returns the protected variable $fCell$.
 
 \subsubsection{getCharge}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Int_t getCharge();
 \end{lstlisting}
 
@@ -401,7 +510,7 @@ It returns the protected variable $fCharge$.
 
 \subsubsection{getCol}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Int_t getCol();
 \end{lstlisting}
 
@@ -411,10 +520,8 @@ It returns the protected variable $fCol$.
 
 \subsubsection{getHit}
 
-\begin{lstlisting}
-void getHit(Int_t& trbnum, Int_t& cell,Int_t&  col, Int_t&  row,
-	Float_t& x, Float_t& y, Float_t& z, Float_t& time,
-	Float_t& charge);
+\begin{lstlisting}[style=customc]
+void getHit(Int_t& trbnum, Int_t& cell,Int_t&  col, Int_t&  row, Float_t& x, Float_t& y, Float_t& z, Float_t& time, Float_t& charge);
 \end{lstlisting}
 
 It sets the value of the protected variables passed as parameters to the respective variables stored in memory for the detector with two planes.
@@ -435,7 +542,7 @@ It sets the value of the protected variables passed as parameters to the respect
 
 \subsubsection{getRow}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Int_t getRow();
 \end{lstlisting}
 
@@ -445,7 +552,7 @@ It returns the protected variable $fRow$.
 
 \subsubsection{getTime}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Int_t getTime();
 \end{lstlisting}
 
@@ -455,7 +562,7 @@ It returns the protected variable $fTime$.
 
 \subsubsection{getTrbnum}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Int_t getTrbnum();
 \end{lstlisting}
 
@@ -465,7 +572,7 @@ It returns the protected variable $fTrbnum$.
 
 \subsubsection{getX}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Int_t getX();
 \end{lstlisting}
 
@@ -475,7 +582,7 @@ It returns the protected variable $fX$.
 
 \subsubsection{getY}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Int_t getY();
 \end{lstlisting}
 
@@ -485,7 +592,7 @@ It returns the protected variable $fY$.
 
 \subsubsection{getZ}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Int_t getZ();
 \end{lstlisting}
 
@@ -495,7 +602,7 @@ It returns the protected variable $fZ$.
 
 \subsubsection{setCell}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 void setCell(Int_t num );
 \end{lstlisting}
 
@@ -505,7 +612,7 @@ It sets the value passed to the $num$ parameter to the protected variable $fCell
 
 \subsubsection{setCharge}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 void setCharge(Float_t val );
 \end{lstlisting}
 
@@ -515,7 +622,7 @@ It sets the value passed to the $val$ parameter to the protected variable $fChar
 
 \subsubsection{setCol}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 void setCol(Int_t num );
 \end{lstlisting}
 
@@ -525,10 +632,8 @@ It sets the value passed to the $num$ parameter to the protected variable $fCol$
 
 \subsubsection{setHit}
 
-\begin{lstlisting}
-void setHit(Int_t trbnum,Int_t  cell,Int_t  col,Int_t  row,
-	Float_t x, Float_t y, Float_t z, Float_t time,
-	Float_t charge);
+\begin{lstlisting}[style=customc]
+void setHit(Int_t trbnum,Int_t  cell,Int_t  col,Int_t  row, Float_t x, Float_t y, Float_t z, Float_t time, Float_t charge);
 \end{lstlisting}
 
 It sets the value of the parameters to their respective protected variables.
@@ -547,7 +652,7 @@ It sets the value of the parameters to their respective protected variables.
 
 \subsubsection{setRow}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 void setRow(Int_t num );
 \end{lstlisting}
 
@@ -557,7 +662,7 @@ It sets the value passed to the $num$ parameter to the protected variable $fRow$
 
 \subsubsection{setTime}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 void setTime(Float_t val );
 \end{lstlisting}
 
@@ -567,7 +672,7 @@ It sets the value passed to the $val$ parameter to the protected variable $fTime
 
 \subsubsection{setTrbnum}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 void setTrbnum(Int_t num );
 \end{lstlisting}
 
@@ -577,7 +682,7 @@ It sets the value passed to the $num$ parameter to the protected variable $fTrbn
 
 \subsubsection{setX}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 void setX(Float_t val );
 \end{lstlisting}
 
@@ -587,7 +692,7 @@ It sets the value passed to the $val$ parameter to the protected variable $fX$.
 
 \subsubsection{setY}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 void setY(Float_t val );
 \end{lstlisting}
 
@@ -597,7 +702,7 @@ It sets the value passed to the $val$ parameter to the protected variable $fY$.
 
 \subsubsection{setZ}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 void setZ(Float_t val );
 \end{lstlisting}
 
@@ -621,7 +726,7 @@ The methods of TRpcHitF class are:
 
 \subsubsection{addRpcHit}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 TRpcHit* addRpcHit();
 \end{lstlisting}
 
@@ -637,7 +742,7 @@ IDK [...]
 
 \subsubsection{init}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Int_t init(TString filename, TString filenameActive);
 \end{lstlisting}
 
@@ -647,7 +752,7 @@ It creates a new TRpcCalPar object called $fPar$ with name $filename$ and anothe
 
 \subsubsection{getRpcHits}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 TClonesArray*  getRpcHits();
 \end{lstlisting}
 
@@ -657,7 +762,7 @@ It returns the private variable $fRpcHitHits$.
 
 \subsubsection{getRpcRawHits}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 TClonesArray*  getRpcRawHits();
 \end{lstlisting}
 
@@ -691,7 +796,7 @@ The methods of TRpcSaeta class are:
 
 \subsubsection{getAl}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Float_t getAl();
 \end{lstlisting}
 
@@ -701,7 +806,7 @@ It returns the alpha $\alpha$ angle in radians $fAl$. This is the angle between 
 
 \subsubsection{getBe}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Float_t getBe();
 \end{lstlisting}
 
@@ -711,7 +816,7 @@ It returns the beta $\beta$ angle in radians $fBe$. This is the angle between th
 
 \subsubsection{getChi2}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Float_t getChi2();
 \end{lstlisting}
 
@@ -721,7 +826,7 @@ It returns the chi squared $\chi^2$ value $fChi2$.
 
 \subsubsection{getGa}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Float_t getGa();
 \end{lstlisting}
 
@@ -731,7 +836,7 @@ It returns the gamma $\gamma$ angle in radians $fGa$w. This is the angle between
 
 \subsubsection{getInd}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Int_t getInd(Int_t n);
 \end{lstlisting}
 
@@ -748,7 +853,7 @@ If $n \neq 0, 1, 2$, it returns $-1$.
 
 \subsubsection{getPhi}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Float_t getPhi();
 \end{lstlisting}
 
@@ -758,7 +863,7 @@ It returns the phi $\phi$ angle. This is the principal value of the arc tangent 
 
 \subsubsection{getPhiDeg}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Float_t getPhiDeg();
 \end{lstlisting}
 
@@ -768,10 +873,8 @@ It returns the phi $\phi$ angle in degrees. This is the principal value of the a
 
 \subsubsection{getRpcSaeta2Planes}
 
-\begin{lstlisting}
-void getRpcSaeta2Planes(Float_t& x0,Float_t& y0,Float_t& t0,
-	Float_t& al,Float_t& be,Float_t& ga,Int_t& ind0,
-	Int_t& ind1);
+\begin{lstlisting}[style=customc]
+void getRpcSaeta2Planes(Float_t& x0,Float_t& y0,Float_t& t0, Float_t& al,Float_t& be,Float_t& ga,Int_t& ind0, Int_t& ind1);
 \end{lstlisting}
 
 It sets the value of the protected variables passed as parameters to the respective variables stored in memory for the detector with two planes.
@@ -789,11 +892,8 @@ It sets the value of the protected variables passed as parameters to the respect
 
 \subsubsection{getRpcSaeta3Planes}
 
-\begin{lstlisting}
-void getRpcSaeta3Planes(Float_t& x0,Float_t& xP,Float_t& y0,
-	Float_t& yP,Float_t& z, Float_t& t0,Float_t& sl,
-	Float_t& al, Float_t& be,Float_t& ga, Int_t& san,
-	Int_t& ind0,Int_t& ind1, Int_t& ind2, Float_t& chi2);
+\begin{lstlisting}[style=customc]
+void getRpcSaeta3Planes(Float_t& x0,Float_t& xP,Float_t& y0, Float_t& yP,Float_t& z, Float_t& t0,Float_t& sl, Float_t& al, Float_t& be,Float_t& ga, Int_t& san, Int_t& ind0,Int_t& ind1, Int_t& ind2, Float_t& chi2);
 \end{lstlisting}
 
 It sets the value of the protected variables passed as parameters to the respective variables stored in memory for the detector with three planes.
@@ -818,7 +918,7 @@ It sets the value of the protected variables passed as parameters to the respect
 
 \subsubsection{getSaetaN}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Float_t getSaetaN();
 \end{lstlisting}
 
@@ -828,7 +928,7 @@ It returns the value of the saeta order $fSaN$.
 
 \subsubsection{getSlow}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Float_t getX0();
 \end{lstlisting}
 
@@ -838,7 +938,7 @@ It returns the slownes of the particle $fSlow$, which is the inverse of velocity
 
 \subsubsection{getTheta}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Float_t getTheta();
 \end{lstlisting}
 
@@ -848,7 +948,7 @@ It returns the theta $\theta$ angle. This is the principal value of the arc cosi
 
 \subsubsection{getThetaDeg}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Float_t getThetaDeg();
 \end{lstlisting}
 
@@ -858,7 +958,7 @@ It returns the theta $\theta$ angle in degrees. This is the principal value of t
 
 \subsubsection{getTime}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Float_t getTime();
 \end{lstlisting}
 
@@ -869,7 +969,7 @@ It returns the time of the hit measured since the tracking started (Units?) $fTi
 
 \subsubsection{getX0}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Float_t getX0();
 \end{lstlisting}
 
@@ -879,7 +979,7 @@ It returns the X coorinate, $fX$ (Units?).
 
 \subsubsection{getXP}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Float_t getXP();
 \end{lstlisting}
 
@@ -889,7 +989,7 @@ It returns the X slope, $fXP$ (Units?).
 
 \subsubsection{getY0}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Float_t getY0();
 \end{lstlisting}
 
@@ -899,7 +999,7 @@ It returns the Y coorinate, $fY$ (Units?).
 
 \subsubsection{getYP}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Float_t getYP();
 \end{lstlisting}
 
@@ -909,7 +1009,7 @@ It returns the Y slope, $fYP$ (Units?).
 
 \subsubsection{getZ0}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Float_t getZ0();
 \end{lstlisting}
 
@@ -919,9 +1019,8 @@ It returns the Z coorinate, $fZ$ (Units?).
 
 \subsubsection{setRpcSaeta2Planes}
 
-\begin{lstlisting}
-void setRpcSaeta2Planes(Float_t x0,Float_t y0,Float_t t0,
-	Float_t al,Float_t be,Float_t ga,Int_t ind0,Int_t ind1);
+\begin{lstlisting}[style=customc]
+void setRpcSaeta2Planes(Float_t x0,Float_t y0,Float_t t0, Float_t al,Float_t be,Float_t ga,Int_t ind0,Int_t ind1);
 \end{lstlisting}
 
 It sets the value of the parameters to their respective protected variables for the detector with only two planes.
@@ -939,11 +1038,8 @@ It sets the value of the parameters to their respective protected variables for 
 
 \subsubsection{setRpcSaeta3Planes}
 
-\begin{lstlisting}
-void setRpcSaeta3Planes(Float_t x0,Float_t xP,Float_t y0,
-	Float_t yP,Float_t z, Float_t t0,Float_t sl, Float_t al
-	Float_t be,Float_t ga, Int_t san,Int_t ind0,Int_t ind1
-	Int_t ind2, Float_t chi2);
+\begin{lstlisting}[style=customc]
+void setRpcSaeta3Planes(Float_t x0,Float_t xP,Float_t y0, Float_t yP,Float_t z, Float_t t0,Float_t sl, Float_t al, Float_t be,Float_t ga, Int_t san,Int_t ind0,Int_t ind1, Int_t ind2, Float_t chi2);
 \end{lstlisting}
 
 It sets the value of the parameters to their respective protected variables for the detector with three planes.
@@ -968,7 +1064,7 @@ It sets the value of the parameters to their respective protected variables for 
 
 \subsubsection{setTime}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 void setTime(Float_t val);
 \end{lstlisting}
 
@@ -999,10 +1095,8 @@ And it also has other public variables:
 \begin{itemize}
 	\item TMatrixF $InputSaeta2Planes$: the saeta vector with next values as arguments
 	
-	\begin{lstlisting}
-TMatrixF InputSaeta2Planes(Float_t x1, Float_t y1, 
-Float_t t1, Float_t z1, Float_t x2, Float_t y2, Float_t t2, 
-Float_t z2);
+	\begin{lstlisting}[style=customc]
+TMatrixF InputSaeta2Planes(Float_t x1, Float_t y1, Float_t t1, Float_t z1, Float_t x2, Float_t y2, Float_t t2, Float_t z2);
 	\end{lstlisting}
 	
 	where $(x_1, y_1, z_1, t_1)$ are the coordinates in the first plane and $(x_2, y_2, z_2, t_2)$ in the second one
@@ -1052,7 +1146,7 @@ Float_t z2);
 	
 	\item TMatrixF $KMatrix$: the $K$ matrix with next values as arguments
 	
-	\begin{lstlisting}
+	\begin{lstlisting}[style=customc]
 TMatrixF KMatrix(TMatrixF SIn, Float_t z);
 	\end{lstlisting}
 	
@@ -1094,9 +1188,8 @@ TMatrixF KMatrix(TMatrixF SIn, Float_t z);
 	
 	\item TMatrixF $AVector$: constructs the \textbf{measurement} (¿?) vector for a non-linear model with next values as arguments
 	
-	\begin{lstlisting}
-TMatrixF AVector(TMatrixF SIn, Float_t x, Float_t y, 
-Float_t t, Float_t z);
+	\begin{lstlisting}[style=customc]
+TMatrixF AVector(TMatrixF SIn, Float_t x, Float_t y, Float_t t, Float_t z);
 	\end{lstlisting}
 	
 	where $(x, y, z, t)$ are the measured coordinates and $SIn$ and $k$ have the same form as in TMatrixF $KMatrix$. So $AVector$ is
@@ -1122,7 +1215,7 @@ The methods of TRpcSaetaF class are:
 
 \subsubsection{addRpcHit}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 TRpcHit* addRpcHit();
 \end{lstlisting}
 
@@ -1132,7 +1225,7 @@ It returns the pointer $rpchit$, which points to a new \texttt{(hits[totalNHitsC
 
 \subsubsection{addRpcSaeta2Planes}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 TRpcSaeta* addRpcSaeta2Planes();
 \end{lstlisting}
 
@@ -1142,7 +1235,7 @@ It returns the pointer $RpcSaeta$, which points to a new \texttt{(RpcSaeta2Plane
 
 \subsubsection{addRpcSaeta3Planes}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 TRpcSaeta* addRpcSaeta3Planes()
 \end{lstlisting}
 
@@ -1152,7 +1245,7 @@ It returns the pointer $RpcSaeta$, which points to a new \texttt{(RpcSaeta3Plane
 
 \subsubsection{execute}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Int_t execute();
 \end{lstlisting}
 
@@ -1162,7 +1255,7 @@ The main function of the class. It makes the loops for finding hits in planes an
 
 \subsubsection{getRpcHits}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 TClonesArray* getRpcHits() {return gEvent->getRpcHits(); }
 \end{lstlisting}
 
@@ -1172,7 +1265,7 @@ TClonesArray* getRpcHits() {return gEvent->getRpcHits(); }
 
 \subsubsection{getRpcHitsCorr}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 ClonesArray* getRpcHitCorr() {return fRpcHitCorr; }
 \end{lstlisting}
 
@@ -1182,7 +1275,7 @@ ClonesArray* getRpcHitCorr() {return fRpcHitCorr; }
 
 \subsubsection{getRpcSaeta2Planes}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 ClonesArray* getRpcSaeta2Planes() {return fRpcSaeta2Planes; }
 \end{lstlisting}
 
@@ -1192,7 +1285,7 @@ It returns the private $fRpcSaeta2Planes$ pointer.
 
 \subsubsection{getRpcSaeta3Planes}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 ClonesArray* getRpcSaeta3Planes() {return fRpcSaeta3Planes; }
 \end{lstlisting}
 
@@ -1202,7 +1295,7 @@ It returns the private $fRpcSaeta3Planes$ pointer.
 
 \subsubsection{init}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Int_t init();
 \end{lstlisting}
 
@@ -1225,16 +1318,15 @@ TTMatrix is the class which does \textit{... that things ...}, and its source co
 	\item Float\_t $fZ2$: Z coordinate in the second plane
 	\item Float\_t $fwx$: deviation of cell shape in x direction
 	\item Float\_t $fwy$: deviation of cell shape in y direction
-	\item Float\_t $fwz$: ¿?
+	\item Float\_t $fwz$: EN TEORÍA NO HAY INCERTIDUMBRE EN Z
 \end{itemize}
 
 And it also has other public variables:
 
 \begin{itemize}
 	\item TMatrixF $AVector$: is the vector which \textit{... do things ...} ¿Is it the \textbf{measurement} vector?
-	\begin{lstlisting}
-TMatrixF AVector(TMatrixF SIn, Float_t x, Float_t y,
-	Float_t t, Float_t z);
+	\begin{lstlisting}[style=customc]
+TMatrixF AVector(TMatrixF SIn, Float_t x, Float_t y, Float_t t, Float_t z);
 	\end{lstlisting}
 
 	where $SIn$ is the input saeta vector
@@ -1275,7 +1367,7 @@ TMatrixF AVector(TMatrixF SIn, Float_t x, Float_t y,
 	Here the $w_x, w_y, w_z, w_t$ variables are initializated to zero all of them when $AVector$ is created.
 	
 	\item TMatrixF $KMatrix$: is the vector which \textit{... do things ...} ¿Is it the \textbf{measurement} vector?
-	\begin{lstlisting}
+	\begin{lstlisting}[style=customc]
 TMatrixF KMatrix(TMatrixF SIn, Float_t z);
 	\end{lstlisting}
 
@@ -1312,10 +1404,8 @@ TMatrixF KMatrix(TMatrixF SIn, Float_t z);
 	
 	\item TMatrixF \textit{InputSaeta2Planes}:  the saeta vector with next values as arguments
 	
-	\begin{lstlisting}
-TMatrixF InputSaeta2Planes(Float_t x1, Float_t y1, 
-Float_t t1, Float_t z1, Float_t x2, Float_t y2, Float_t t2, 
-Float_t z2);
+	\begin{lstlisting}[style=customc]
+TMatrixF InputSaeta2Planes(Float_t x1, Float_t y1, Float_t t1, Float_t z1, Float_t x2, Float_t y2, Float_t t2, Float_t z2);
 	\end{lstlisting}
 	
 	where $x_1, y_1, z_1, t_1$ are the coordinates in the first plane and $x_2, y_2, z_2, t_2$ in the second one. This is a function that returns
@@ -1360,9 +1450,8 @@ Unpacker has some protected variables:
 
 \subsubsection{* The Constructors}
 
-\begin{lstlisting}
-Unpacker(const char* dir,const char* name, const char* odir, 
-	Int_t nEvt, TString luptab, TString calpar);
+\begin{lstlisting}[style=customc]
+Unpacker(const char* dir,const char* name, const char* odir, Int_t nEvt, TString luptab, TString calpar);
 \end{lstlisting}
 
 Using this construtor of unpacker we have access the data output of the tracking code. By executing this code into the \textsc{root} command line we can check whether or not what we rebuild is compatible with the current methods. Parameters:
@@ -1382,7 +1471,7 @@ The methods of the Unpacker class are:
 
 \subsubsection{eventLoop}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Bool_t eventLoop(Int_t NbEvt=50000,Int_t startEvt=0);
 \end{lstlisting}
 
@@ -1395,11 +1484,9 @@ Loop over all events, data is written to the root tree.
 
 \subsubsection{eventLoopFillCal}
 
-\begin{lstlisting}
-Bool_t eventLoopFillCal(Int_t nbEvt, Int_t startEv, TH1D** hq, 
-	TH1D** hdt, TH1D** hdt2);
-Bool_t eventLoopFillCal(Int_t nbEvt, Int_t startEv, TH1D** h1D, 
-	TH2D** h2D, TH3D** h3D);
+\begin{lstlisting}[style=customc]
+Bool_t eventLoopFillCal(Int_t nbEvt, Int_t startEv, TH1D** hq, TH1D** hdt, TH1D** hdt2);
+Bool_t eventLoopFillCal(Int_t nbEvt, Int_t startEv, TH1D** h1D, TH2D** h2D, TH3D** h3D);
 \end{lstlisting}
 
 Loop over all events, data written to the root tree
@@ -1417,7 +1504,7 @@ Loop over all events, data written to the root tree
 
 \subsubsection{eventLoopSyncCheck}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Int_t eventLoopSyncCheck(Int_t nbEvt,Int_t startEv);
 \end{lstlisting}
 
@@ -1430,9 +1517,8 @@ Loop over all events, data is written to the root tree.
 
 \subsubsection{fillCalibration}
 
-\begin{lstlisting}
-void Unpacker::fillCalibration(const char* dir, TString list,
-	const char* odir,const char* ofile, Int_t nEvt,Int_t n);
+\begin{lstlisting}[style=customc]
+void Unpacker::fillCalibration(const char* dir, TString list, const char* odir,const char* ofile, Int_t nEvt,Int_t n);
 \end{lstlisting}
 
 \begin{itemize}
@@ -1451,10 +1537,8 @@ void Unpacker::fillCalibration(const char* dir, TString list,
 
 \subsubsection{fillHistograms}
 
-\begin{lstlisting}
-void fillHistograms(const char* dir, TString list,
-	const char* odir, const char* ofile, Int_t nEvt,
- 	Int_t n,Int_t n2);
+\begin{lstlisting}[style=customc]
+void fillHistograms(const char* dir, TString list, const char* odir, const char* ofile, Int_t nEvt, Int_t n,Int_t n2);
 \end{lstlisting}
 
 \begin{itemize}
@@ -1470,7 +1554,7 @@ void fillHistograms(const char* dir, TString list,
 
 \subsubsection{getFileHitFinderPar}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 void getFileHitFinderPar( void );
 \end{lstlisting}
 
@@ -1480,7 +1564,7 @@ It gets the variable TString $fileHitFinderPar$, the name of the file with hit f
 
 \subsubsection{getFileHitFinderParOut}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 void getFileHitFinderParOut( void );
 \end{lstlisting}
 
@@ -1490,7 +1574,7 @@ It gets the variable TString $fileHitFinderParOut$, the name of the file with hi
 
 \subsubsection{getFileLookupPar}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 void getFileLookupPar( void );
 \end{lstlisting}
 
@@ -1500,7 +1584,7 @@ It gets the variable TString $fileLookupPar$, the name of the file with lookup p
 
 \subsubsection{getFileTrackFinderPar}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 void getFileTrackFinderPar( void );
 \end{lstlisting}
 
@@ -1510,7 +1594,7 @@ It gets the variable TString $fileTrackFinderPar$, the name of the file with tra
 
 \subsubsection{getpEvent}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 HldEvent* getpEvent(void);
 \end{lstlisting}
 
@@ -1520,7 +1604,7 @@ It returns the pointer HldEvent* $pEvent$.
 
 \subsubsection{getEventLimit}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Int_t getEventLimit()
 \end{lstlisting}
 
@@ -1530,7 +1614,7 @@ It returns the Int\_t $EventLimit$.
 
 \subsubsection{getEventNr}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Int_t getEventNr()
 \end{lstlisting}
 
@@ -1540,7 +1624,7 @@ It returns the Int\_t $EventNr$.
 
 \subsubsection{HexStrToInt}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 UInt_t HexStrToInt(const char* str) {
 	UInt_t t;
 	std::stringstream s;
@@ -1556,7 +1640,7 @@ It is easy to see that \texttt{HexStrToInt} takes a const char* $str$ as argumen
 
 \subsubsection{setInputFile}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 std::string setInputFile(const char* filename);
 std::string setInputFile(const char* dir,const char* filename); 
 \end{lstlisting}
@@ -1567,7 +1651,7 @@ It sets $filename$ as name of the \texttt{filename.hld} input file and returns a
 
 \subsubsection{setFileHitFinderPar}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 void setFileHitFinderPar( TString fileName);
 \end{lstlisting}
 
@@ -1577,7 +1661,7 @@ It sets $fileName$ to the variable TString $fileHitFinderPar$, the name of the f
 
 \subsubsection{setFileHitFinderParOut}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 void setFileHitFinderParOut( TString fileName);
 \end{lstlisting}
 
@@ -1587,7 +1671,7 @@ It sets $fileName$ to the variable TString $fileHitFinderParOut$, the name of th
 
 \subsubsection{setFileLookupPar}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 void setFileLookupPar( TString fileName);
 \end{lstlisting}
 
@@ -1597,7 +1681,7 @@ It sets $fileName$ to the variable TString $fileLookupPar$, the name of the file
 
 \subsubsection{setFileTrackFinderPar}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 void setFileTrackFinderPar( TString fileName);
 \end{lstlisting}
 
@@ -1607,7 +1691,7 @@ It sets $fileName$ to the variable TString $fileTrackFinderPar$, the name of the
 
 \subsubsection{setpEvent}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Bool_t setpEvent(Int_t subId);
 void setpEvent(HldEvent* evt);
 \end{lstlisting}
@@ -1618,7 +1702,7 @@ It sets $pEvent$ (the current event read from file) by reading hld file, where $
 
 \subsubsection{setRootFile}
 
-\begin{lstlisting}
+\begin{lstlisting}[style=customc]
 Bool_t setRootFile(const char* filename);
 \end{lstlisting}
 
@@ -1629,9 +1713,8 @@ It sets $filename$ as name to a new root output file and returns the \textsc{roo
 
 \subsubsection{syncCheck}
 
-\begin{lstlisting}
-Int_t syncCheck(const char* dir, TString file, 
-	Int_t nEvt,Int_t n);
+\begin{lstlisting}[style=customc]
+Int_t syncCheck(const char* dir, TString file, Int_t nEvt,Int_t n);
 \end{lstlisting}
 
 \begin{itemize}
