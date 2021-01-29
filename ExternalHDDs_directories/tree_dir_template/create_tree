@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# Execute this file in /media/external/ with needed permissions
+# Maybe you must do in terminal:
+#     $ chmod +x create_tree
+
+COMMAND=$1
+DETECTOR=$2
+
+function create_tree() {
+    echo "Creating tree of directories for $DETECTOR detector..."
+    mkdir -vp $DETECTOR/data/raw/
+    mkdir -vp $DETECTOR/data/dst/
+    mkdir -vp $DETECTOR/data/slcontrol/
+    mkdir -vp $DETECTOR/data/monitor/
+
+    mkdir -vp $DETECTOR/environment/meteo/
+    mkdir -vp $DETECTOR/environment/route/
+
+    mkdir -vp $DETECTOR/soft/scripts/
+    mkdir -vp $DETECTOR/soft/tracking/
+    mkdir -vp $DETECTOR/soft/calibrate/
+
+    mkdir -vp $DETECTOR/pool
+
+    mkdir -vp $DETECTOR/people/
+
+    mkdir -vp $DETECTOR/world/neutron/
+    mkdir -vp $DETECTOR/world/muon/
+    mkdir -vp $DETECTOR/world/solar/
+}
+
+function show_help() {
+    echo "Usages:"
+    echo "source create_tree make <detector_name>"
+    echo "./create_tree make <detector_name>"
+}
+
+case $COMMAND in
+    make)    create_tree ;;
+    *)         show_help ;;
+esac
