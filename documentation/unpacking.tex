@@ -1,0 +1,115 @@
+
+\chapter{Unpacking data from TRAGALDABAS}
+
+\section{DST\_Guide}
+
+En el directorio \texttt{/media/Datos2TB/username/tragaldabas/soft\_TT/} tenemos los siguientes archivos, que se pueden ejecutar por este orden:
+
+\begin{itemize}
+	\item \textit{createFileLists.py}: Genera las listas con paths absolutos los archivos \textit{tryydddhhmmss.hld} tanto del \texttt{/media/Datos2TB/tragaldabas/data/done} como del \texttt{/media/externalHD/Tragaldabas/data\_hld} y los guarda en archivos \textit{list\_yyyy\_day\_ddd.list}, uno por cada día de archivos .hld. Además crea una carpeta con ellos y unas listas \textit{listExternal.list} con los nombres de los ficheros que ha encontrado en cada disco duro.
+	
+	\item \textit{efficiency.cc}: La ayuda para compilar este código se encuentra en \textit{howtocompile.txt}
+	
+	\begin{lstlisting}[style=customsh]
+[username@fptrucha soft_TT]$ g++ -Wall -g -O -fPIC 'root-config --cflags' <filename.cc> 'root-config --glibs' 'root-config --libs' -L ./ -I ./ -ltunpacker -o <analysis_exe>
+	\end{lstlisting}
+	donde \textless filename.cc\textgreater\ es en este caso \textit{efficiency.cc} y en \textless analysis\_exe\textgreater\ se le da el nombre que se quiera al archivo ejecutable que crea con los parámetros del detector.
+	
+	Antes de proceder a la compilación, definir manualmente dentro de \textit{efficiency.cc} (o descomentar, si ya están escritas) solamente las siguientes líneas:
+	
+	\begin{lstlisting}[style=customc]
+void doStaffCalibration(char* path,char* name){
+	unpack.setFileLookupPar(<path_to_luptab>)
+	// Escoger la luptab correspondiente a las fechas para las cuales se estan analizando estos datos concretos.
+	unpack.setFileHitFinderPar(`empty_cal_2016.txt>`)
+	// Estos datos son siempre los mismos.
+	unpack.setFileHitFinderParOut(`<my_path>/20YYDST/pars/` + day + `_CalPars.txt`)
+	// Aqui solamente introducir el path hacia tu directorio soft_TT.
+	unpack.fillCalibration(`/media/Datos2TB/tragaldabas/data/done/`, `../` + fName, `../qcalhistos2/`, day + `\_qcalhistos.root`, 1000000, 0)
+	// En esta linea, introducir correctamente los paths.
+	}
+	
+void doStaffAnalysis(char* path,char* name){
+	fill.setFileLookupPar(`luptabs/luptab.txt`)
+	// Editar el path hacia la luptab correspondiente.
+	fill.setFileHitFinderPath(`/day\_CalPars.txt`)
+	// El output de unpack.setFileHitFinderParOut() sera el input de este metodo: introducir el path hacia el mismo.
+	}
+	
+	/* 
+	[...]
+	*/
+	\end{lstlisting}
+
+	\item \textit{multiThreadRun.py}: Multiprocesado en varios cores para agilizar el proceso. Se lanza desde bash de la siguiente forma
+	
+	\begin{lstlisting}[style=customsh]
+[username@fptrucha soft_TT]$ python3 multithreadRun.py ./analysis_exe lists_name.txt
+	\end{lstlisting}
+	siendo el primer argumento el nombre del archivo ejecutable devuelto por \textit{efficiency.cc} y el segundo el archivo con la lista de nombres devuelto por \textit{createFileLists.py}.
+	
+	\textbf{20XXDST/} new\_results.* para ver el root y en cuentas de celdas un valor de 2500 es razonable como máximo.
+\end{itemize}
+
+Al lanzar el ejecutable anterior, se generan archivos en los directorios \texttt{qcalhistos}\footnote{Histogramas de calibración} y \texttt{pars}, los cuales hay que crear manualmente junto a \texttt{../20YYDST/results}, donde \texttt{20YY} es el año.
+
+``Matar celdas que hayan registrado ruído y volver a correr sobre los .hld''
+
+\subsection{Proceso:}
+
+(¿?) Primero creamos el archivo vacío de celdas activas con:
+\begin{lstlisting}[style=customsh]
+[username@fptrucha soft_TT]$ $ root -l CreateActiveCells.c
+\end{lstlisting}
+y a continuación
+\begin{lstlisting}[style=customsh]
+[username@fptrucha soft_TT]$ $ make clean
+[username@fptrucha soft_TT]$ $ make
+\end{lstlisting}
+
+Blah blah
+
+...
+
+Crear directorio \texttt{20YYDST} manualmente en \texttt{/media/Datos2TB/username/} como se muestra en la figura \ref{fg:20YYDSTdir}
+
+\begin{figure}[!h]
+\begin{forest}
+  pic dir tree,
+  pic root,
+  for tree={directory,},
+	[/media/Datos2TB/username/
+		[20YYDST/
+			[qcalhistos/]
+			[results/]
+			[pars/]
+		]
+		[...]
+		[..., file]
+	]
+\end{forest}
+\label{fg:20YYDSTdir}
+\caption{Directorio \texttt{20YYDST/} y subdirectorios.}
+\end{figure}
+
+A continuación, ejecutar los programas anteriormente mencionados. Notar que se pueden usar las flags:
+\begin{itemize}
+	\item \texttt{htop}: comando para ver procesos
+	\item \texttt{root -l GoodActiveCells.root}: para abrir con \texttt{new TBrowser} más fácilmente (se queda arriba de todo en el árbol). Con esto se pueden ver las celdas muertas
+	\item \texttt{hadd -f dst2018\_full.root *.root}: Une varios histogramas root (*.root) en un solo archivo (dst2038\_full.root).
+\end{itemize}
+
+
+Crear archivo vacio sin abrirlo
+\begin{lstlisting}[style=customsh]
+[username@fptrucha soft_TT]$ touch luptab.txt
+[username@fptrucha soft_TT]$ ln -sf luptab\_20201013.txt luptab.txt
+\end{lstlisting}
+y crear un hard link\footnote{También llamado enlace simbólico.}. A continuación abrir \textit{efficiency.cc} y cambiar paths.
+
+Exportar al load library path
+\begin{lstlisting}[style=customsh]
+[username@fptrucha any_dir]$ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:<path/to/libtunpacker.so>
+\end{lstlisting}
+donde \texttt{<path/to/libtunpacker.so>} es el path absoluto al direcotrio \texttt{/media/.../ username/tragaldabas/soft\_TT/}
+
