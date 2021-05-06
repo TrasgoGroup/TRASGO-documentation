@@ -38,19 +38,20 @@
 
 \lstdefinestyle{customsh}{
   language=bash,
-  basicstyle=\color{green!60}\small\ttfamily,
+  basicstyle=\color{black!80}\small\ttfamily,
   numbers=left,
   numberstyle=\color{black}\small\ttfamily,
   numbersep=3pt,
-  frame=tb,
+  % frame=tb,
   showstringspaces=false,
   breaklines=true,
   columns=fullflexible,
-  backgroundcolor=\color{black!85},
+  backgroundcolor=\color{black!5},
   linewidth=0.9\linewidth,
   xleftmargin=\parindent,  % 0.05\linewidth,
   xrightmargin=-0.1\linewidth
 }
+
 
 \usepackage{hyperref}
 \usepackage{breakurl}
@@ -107,179 +108,130 @@
   pic me set={file}{file},
 }
 
-\title{Distribución de directorios en HDD Datos2TB}
+\title{Directory distribution in Datos4TB \\External HDD}
 \date{}
 
 \begin{document}
 \maketitle
 
-\section{Directorios superiores}
+
+To check those directories from \texttt{fptrucha.usc.es}, you can use the \texttt{tree} command
+\begin{lstlisting}[style=customsh]
+$ cd /media/Datos4TB/
+$ tree -d -L 2 -C
+\end{lstlisting}
+where the flag \texttt{-d} shows only directories; \texttt{-L 2} to descend only two directories deep; \texttt{-C} turns colorization on. For more information about \texttt{tree} flags and options, see
+\begin{lstlisting}[style=customsh]
+$ tree --help
+\end{lstlisting}
+
+
+\section{Top directories}
 
 \begin{forest}
   pic dir tree,
   pic root,
   for tree={directory,},
-	[/media/Datos2TB/
+	[/media/Datos4TB/
+        [cosmix/
+            [context/]
+            [data/]
+            [pool/]
+            [soft/]
+        ]
+		[people/
+            [korna/]
+            [mabbrescia/]
+            [marwan/]
+            [mcruces/]
+        ]
 		[tragaldabas/
-			[data/]
-			[dst/]
-			[external/
-				[md5, file]
-				[md5.tar.gz, file]
-			]
-			[git/
-				[gitolite-admin/
-					[conf/]
-					[keydir/]
-				]
-			]
-			[historical\_data/]
-			[luptab/
-				[luptab\_20yymmdd.txt, file]
-				[....txt, file]
-			]
-			[scripts/]
+            [context/]
+            [data/]
+            [people/]
+            [pool/]
+            [soft/]
 		]
-		[users]
+		[tristan/
+            [context/]
+            [data/]
+            [DATOS\_TRISTAN\_Base/]
+            [pool/]
+            [soft/]
+		]
 		[...]
 	]
 \end{forest}
 
-\subsection{Directorio data/}
+\section{tragaldabas/}
 
 \begin{forest}
   pic dir tree,
   pic root,
   for tree={directory,},
-	[/media/Datos2TB/tragaldabas/data/
-		[done/
-			[tryydddhhmmss.hld, file]
-			[....hld, file]
-		]
-		[Done -> done/]
-		[matlab
-			[tryydddhhmmss\_TRBi.mat, file]
-			[....mat, file]
-		]
-		[sync
-			[tryydddhhmmss\_sync\_TRBi.mat, file]
-			[....mat, file]
-		]
-	]
+	[/media/Datos4TB/tragaldabas/
+		[context/
+            [meteo/]
+        ]
+		[data/
+            [dst/]
+            [hlds/]
+            [monitor/
+                [cellmaps/]
+                [png/]
+            ]
+            [Nov2020\_dst/
+                [dat/]
+                [png/]
+                [root/]
+            ]
+            [slow/]
+        ]
+        [people/]
+        [pool/]
+        [soft/
+            [calibrate/]
+            [scripts/]
+            [tracking/]
+        ]
+    ]
 \end{forest}
 
-\subsection{Directorio dst/}
+
+\section{tristan/}
 
 \begin{forest}
   pic dir tree,
   pic root,
   for tree={directory,},
-	[/media/Datos2TB/tragaldabas/dst/
-		[ascii/
-			[diferential\_specialDST20yy\_h\_flux2\_M\_n\_D\_20yymmdd.txt, file]
-			[....txt, file]
-		]
-		[root
-			[DST201712/
-				[specialDST20yy.root, file]			
-				[....root, file]
-			]
-			[histograms\_20yy.root, file]
-			[....root, file]
-		]
-		[scripts
-			[createAsciiFromRoot.C, file]
-			[createAsciiFromRoot\_C.so, file]
-			[diferential\_histosDST20yy\_h\_flux2\_M\_n\_D\_20yymmdd.txt, file]
-			[integrated\_histos\_20yy\_h\_flux3\_M\_n\_D\_20yymmdd.txt, file]
-			[....txt, file]
-		]
-	]
-\end{forest}
-
-\subsection{Directorio historical\_data/}
-
-\begin{forest}
-  pic dir tree,
-  pic root,
-  for tree={directory,},
-	[/media/Datos2TB/tragaldabas/historical\_data/
-		[nagios\_graphs/
-			[2017/
-				[2017mmdd/
-					[corrientes\_Plano\_n.png, file]
-					[humedad\_Plano\_n.png, file]
-					[presion\_Plano\_n.png, file]
-					[temperatura\_Plano\_n.png, file]
-					[triggers.png, file]
-				]
-			]
-			[.../]
-			[2029/]
-		]
-		[rrd\_files/
-			[trigger\_rate\_20171106\_144413.rrd, file]
-		]
-	]
-\end{forest}
-
-\subsection{Directorio scripts/}
-
-\begin{forest}
-  pic dir tree,
-  pic root,
-  for tree={directory,},
-	[/media/Datos2TB/tragaldabas/scripts/
-		[backup\_slowcontrol.sh, file]
-		[backup\_tars.sh, file]
-		[backup\_tars.v1.sh, file]
-		[check\_tars.sh, file]
-		[reorderCurrData.py, file]
-		[..., file]
-		[outputs/
-			[createTars\_20yy-mm-dd\_HH:MM.log, file]
-		]
-		[test/
-			[Arduino0/
-				[OpCurrent\_yymmdd\_hhmm.txt, file]
-				[....txt, file]
-			]
-			[Arduino1/
-				[EnvironmentMeasurements\_yymmdd.txt, file]
-				[....txt, file]
-			]
-			[raspberry06/
-				[h04/
-					[yyyy yyyy-mm-dd.txt, file]
-					[....txt, file]
-				]
-			]
-		]
-	]
+	[/media/Datos4TB/tristan/
+		[context/
+            [meteo/]
+        ]
+		[data/
+            [backup\_Jan20/]
+            [dst/]
+            [hlds/]
+            [monitor/
+                [cellmaps/]
+                [png/]
+            ]
+            [raw/]
+            [slow/]
+            [zold\_backup/]
+        ]
+        [DATOS\_TRISTAN\_Base/
+            [hlds/]
+            [sc/]
+        ]
+        [pool/]
+        [soft/
+            [calibrate/]
+            [scripts/]
+            [tracking/]
+        ]
+    ]
 \end{forest}
 
 
 \end{document}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
