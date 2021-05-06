@@ -38,15 +38,15 @@
 
 \lstdefinestyle{customsh}{
   language=bash,
-  basicstyle=\color{green!60}\small\ttfamily,
+  basicstyle=\color{black!80}\small\ttfamily,
   numbers=left,
   numberstyle=\color{black}\small\ttfamily,
   numbersep=3pt,
-  frame=tb,
+  % frame=tb,
   showstringspaces=false,
   breaklines=true,
   columns=fullflexible,
-  backgroundcolor=\color{black!85},
+  backgroundcolor=\color{black!5},
   linewidth=0.9\linewidth,
   xleftmargin=\parindent,  % 0.05\linewidth,
   xrightmargin=-0.1\linewidth
@@ -107,13 +107,23 @@
   pic me set={file}{file},
 }
 
-\title{Distribución de directorios en HDD Datos2TB}
+\title{Directory distribution in Datos2TB \\External HDD}
 \date{}
 
 \begin{document}
 \maketitle
 
-\section{Directorios superiores}
+To check those directories from \texttt{fptrucha.usc.es}, you can use the \texttt{tree} command
+\begin{lstlisting}[style=customsh]
+$ cd /media/Datos2TB/
+$ tree -d -L 2 -C
+\end{lstlisting}
+where the flag \texttt{-d} shows only directories; \texttt{-L 2} to descend only two directories deep; \texttt{-C} turns colorization on. For more information about \texttt{tree} flags and options, see
+\begin{lstlisting}[style=customsh]
+$ tree --help
+\end{lstlisting}
+
+\section{Top directories}
 
 \begin{forest}
   pic dir tree,
@@ -137,6 +147,8 @@
 			[luptab/
 				[luptab\_20yymmdd.txt, file]
 				[....txt, file]
+                [\textcolor{cyan}{luptab.txt} $\rightarrow$ luptab\_current.txt, file]
+				[README.md, file]
 			]
 			[scripts/]
 		]
@@ -145,7 +157,7 @@
 	]
 \end{forest}
 
-\subsection{Directorio data/}
+\subsection{The data/ directory}
 
 \begin{forest}
   pic dir tree,
@@ -156,7 +168,7 @@
 			[tryydddhhmmss.hld, file]
 			[....hld, file]
 		]
-		[Done -> done/]
+        [\textcolor{cyan}{Done/} $\rightarrow$ done/]
 		[matlab
 			[tryydddhhmmss\_TRBi.mat, file]
 			[....mat, file]
@@ -168,7 +180,7 @@
 	]
 \end{forest}
 
-\subsection{Directorio dst/}
+\subsection{The dst/ directory}
 
 \begin{forest}
   pic dir tree,
@@ -197,7 +209,7 @@
 	]
 \end{forest}
 
-\subsection{Directorio historical\_data/}
+\subsection{The historical\_data/ directory}
 
 \begin{forest}
   pic dir tree,
@@ -223,7 +235,7 @@
 	]
 \end{forest}
 
-\subsection{Directorio scripts/}
+\subsection{The scripts/ directory}
 
 \begin{forest}
   pic dir tree,
@@ -260,26 +272,4 @@
 
 
 \end{document}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
