@@ -12,6 +12,9 @@
 *.cb2
 .*.lb
 
+# VIM
+Session.vim
+
 ## Intermediate documents:
 *.dvi
 *.xdv
