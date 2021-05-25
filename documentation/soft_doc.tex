@@ -1,16 +1,43 @@
 \chapter{Software Documentation}
 
 
+\section{TRUFA reposiroty}
 
-\section{The soft\_TT directory}
+You can clone this reposiroty from \textsf{GitHub}:
+\begin{lstlisting}[style=customsh]
+cd <work_dir>
+git clone https://github.com/TrasgoGroup/TRUFA.git
+\end{lstlisting}
+inside your Tragaldabas working directory directly, but forking it is recommended to make your own modifications to this code.
 
-Inside of soft\_TT\footnote{Whose full path is \texttt{/media/Datos2TB/damian/tragaldabas/soft\_TT/}.} directory
+\section{How to fork}
 
-tenemos las listas con los archivos.hld que da Tragaldabas como output. Por ejemplo list\_2019.list (que se abre con less en línea de comandos) tenemos una serie de archivos tr18234...hld
+If you don't have a \textsf{GitHub} account, \href{https://github.com/join}{join} first. Then, navigate to \url{https://github.com/TrasgoGroup/TRUFA.git} and fork the repository to you account by clicking in the \textsf{Fork} button, shown in Figure \ref{fig:Fork}.
 
-En soft\_TT/testlists/ hay listas con listas en su interior guardando más nombres de archivos.hld iguales. Estos definen cuáles interesan para ejecutar en cada una.
+Once you have forked it, you can navigate to your \textsf{GitHub} profile and go to your repositories. If you open the \textsf{TRUFA} repository you will see something similar to Figure \ref{fig:Fork}, then you are able to clone your forked repository by clicking in the green button \textsf{Code} and copying the \textsc{https} link.
 
-El archivo de python multiThreadRun.py en soft\_TT es el que ordena la ejecución en paralelo de los archivos.hld
+You can clone this reposiroty from your \textsf{GitHub} account:
+\begin{lstlisting}[style=customsh]
+cd <work_dir>
+git clone <copied_link>
+\end{lstlisting}
+inside your Tragaldabas working directory directly. Now you can edit, \texttt{git add}, \texttt{git commit}, \texttt{git push} and all you want in your new \textsf{TRUFA} directory.
+
+
+\begin{figure}% [htp]
+    \centering
+    \includegraphics[width=\linewidth]{how_to_fork.png}
+    \caption{\textsf{Fork} button is in the top-right margin of the page.}
+    \label{fig:Fork}
+\end{figure}
+
+
+
+\section{The TRUFA directory}
+
+Inside your \textsf{TRUFA} directory we need to create the lists with \texttt{output\_files.hld} from \textsc{tragaldabas} detector. Those are text files with all \texttt{hld} names separated by line-breaks, which define what files will be executed. The \textsf{python} script called \texttt{multiThreadRun.py} is the one that orders the processes to be executed in parallel for all \texttt{hld} files.
+
+The classes explained below are defined in the files written in C that make up this directory
 
 \section{Classes definitions}
 
