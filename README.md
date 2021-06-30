@@ -10,6 +10,7 @@ Here are all the links to code repositories useful for simulation, analysis and 
 - [Tragaldabas alarm](https://github.com/TrasgoGroup/TRAGALDABAS-alarm): When the system is not saving data in the corresponding directory for whatever reason, it is expected to receive a message to the Telegram bot called ***TRAGALDABAS-alarms*** (*@tragaldabas_bot*).
 - [TRUFA](https://github.com/TrasgoGroup/TRUFA): Unpacking and tracking code for Tragaldabas (TRasgo User-friendly Framework for Analysis).
 - [EnsarRoot](https://github.com/TrasgoGroup/EnsarRoot): EnsarRoot, the framework for simulation and data analysis for ENSAR.
+- [Sensors](md/sensors.md): Gitolite repository with python slow control sensors.
 - [Tristan Aires Simulation](https://github.com/TrasgoGroup/TRISTAN-journey-simulation): Simulation of particle showers on the TRISTAN detector on its journey through the Atlantic Ocean.
 - [Tristan Data Reader](https://github.com/TrasgoGroup/TRISTAN-hesperides-reader): Reading data from Tristan on Hesperides.
 - [Kalman FIlter](https://github.com/MCruces-fz/TRAGALDABAS-Kalman-Filter): Genedigitana using Kalman Filter for reconstruction with Tragaldabas.
