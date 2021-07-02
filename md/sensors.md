@@ -79,10 +79,39 @@ GIT
         |- ea??-selenium.git
         |- ...
         |- programa(s)_luis.git
+        |- Sensors.git
         |- tragaldabas.git
         |- Tragaldabas.git
         |- TrasgoDBs.git
 ```
 
 
+## Create New Repository
+
+If you are not `CREATOR` you can't add new repositories outside `Software/`
+directory. To add any repository (being `CREATOR`), you need to edit the 
+`gitolite-admin/conf/gitolite.conf` configuration file and add this entry
+```
+repo <REPONAME>
+    RW+  =  <KEYNAME>
+```
+where `REPONAME` is the name of the new repositoru and `KEYNAME` is the key in 
+the keydir without `.pub`. After adding this entry commit your change and push it 
+to your repository.
+
+After that create your new project locally and pysh it to your repository
+```bash
+cd <REPONAME>
+git init
+git add .
+git commit -m 'initial commit' -a
+git remote add origin tragaldabas-git:<REPONAME>
+git push origin master:refs/heads/master
+git push --set-upstream origin master
+```
+
+If you are not `CREATOR`, you can create new repoistories inside `Software`.
+This new repository called `<REPO>` is the same as above using 
+`<REPONAME>=Software/<REPO>`and without editing anything in 
+`gitolite-admin/conf/gitolite.conf`
 
