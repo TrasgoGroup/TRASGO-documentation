@@ -3,9 +3,9 @@
 Gitolite is an access control layer on top of git. Here are the [features](gitolite_features.md) that most people see
 
 Index:
-- [Sing up process](##"*sin-up*"-process)
-    + [Repositories](###repositories)
-- [Create New Repository](##create-new-repository)
+- [Sing up process](#sing-up-process)
+    + [Repositories](#repositories)
+- [Create New Repository](#create-new-repository)
 
 
 ## "*Sing Up*" process
