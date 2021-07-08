@@ -1,12 +1,12 @@
 # TRASGO-documentation
 
-Central repository with [*TrasgoGroup*](https://github.com/TrasgoGroup) Documentation. Check [PDF Here](documentation/main.pdf).
+Central repository with Trasgo Group Documentation
 
 ## Software repositories
 
 Here are all the links to code repositories useful for simulation, analysis and slowcontrol in the *TrasgoGroup*. All of them have their own documentation in the `README.md` (main page of each repository).
 
-- [Cellmap Viewer](https://github.com/TrasgoGroup/Cell-Viewer): Graphical User Interface to monitor data from TRASGO type detectors.
+- [Cell-Viewer](https://github.com/TrasgoGroup/Cell-Viewer): Graphical User Interface to monitor data from TRASGO type detectors.
 - [Tragaldabas alarm](https://github.com/TrasgoGroup/TRAGALDABAS-alarm): When the system is not saving data in the corresponding directory for whatever reason, it is expected to receive a message to the Telegram bot called ***TRAGALDABAS-alarms*** (*@tragaldabas_bot*).
 - [TRUFA](https://github.com/TrasgoGroup/TRUFA): Unpacking and tracking code for Tragaldabas (TRasgo User-friendly Framework for Analysis).
 - [EnsarRoot](https://github.com/TrasgoGroup/EnsarRoot): EnsarRoot, the framework for simulation and data analysis for ENSAR.
@@ -16,13 +16,9 @@ Here are all the links to code repositories useful for simulation, analysis and 
 - [Entries and Multiplicity Analysis for Tragaldabas](https://github.com/MCruces-fz/STRATOS): Codes written for STRATOS collaboration (USC) by Martina Feijoo.
 
 Thanks to anyone who continues to add documented repositories.
-
 Peace :v:
 
 ## Directories in this repository
-
-### documentation/
-General documentation in [pdf](documentation/main.pdf).
 
 ### ExternalHDDs_directories/
 
@@ -53,4 +49,8 @@ function create_tree() {
 }
 ```
 to make your own custom directory-tree.
+
+
+### documentation/
+General documentation in pdf.
 
